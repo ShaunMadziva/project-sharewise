@@ -60,7 +60,7 @@ class Requests {
 
     async destroy() {
         const response = await db.query(
-            "DELETE * FROM requests WHERE request_id = $1 RETURNING *;", [this.request_id]
+            "DELETE FROM requests WHERE request_id = $1 RETURNING *;", [this.request_id]
         )
         return new Requests(response.rows[0])
     }
