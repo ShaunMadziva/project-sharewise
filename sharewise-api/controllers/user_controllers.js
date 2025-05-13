@@ -3,75 +3,45 @@ const jwt =require("jsonwebtoken")
 
 const User = require('../models/user_models');
 
-async function index(req, res) {
+async function schoolregister(req, res) {
     try {
-        const user = await User.getAll()
-        res.status(200).json(user)
-    } catch(err){
-        res.status(500).json({ error: err.message})
-    }
-}
-
-async function show(req, res) {
-    try {
-        const id = parseInt(req.params.id)
-        const user = await User.getOneById(id)
-        res.status(200).json(user)
-    } catch(err) {
-        res.status(404).json({ error: err.message })
-    }
-}
-
-// async function signup (req, res) {
-//     const data = req.body;
-//     // Generate a salt
-//     const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS))
-//     // Use salt to hash the plaintext password and reassign to data object
-//     data["password"] = await bcrypt.hash(data.password, salt)
-//     // Pass data into the model
-//     const result = await User.create(data)
-//     res.status(201).json(result);
-// };
-
-async function donorSignup(req, res) {
-    try {
-        const data = req.body;
-        data.user_type = "donor";
-        const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
-        data.password = await bcrypt.hash(data.password, salt);
-        const result = await User.create(data);
-        res.status(201).json(result);
+      const data = req.body;
+      const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+      data["password"] = await bcrypt.hash(data.password, salt);
+      const result = await User.createSchool(data);
+      res.status(201).send(result);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+      res.status(400).json({ error: err.message });
     }
 }
 
-async function schoolSignup(req, res) {
+async function donorregister(req, res) {
     try {
-        const data = req.body;
-        data.user_type = "school";
-        const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
-        data.password = await bcrypt.hash(data.password, salt);
-        const result = await User.create(data);
-        res.status(201).json(result);
+      const data = req.body;
+      const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+      data["password"] = await bcrypt.hash(data.password, salt);
+      const result = await User.createDonor(data);
+      res.status(201).send(result);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+      res.status(400).json({ error: err.message });
     }
 }
 
 
-async function login (req, res) {
+async function schoollogin (req, res) {
     const data = req.body;
     try {
-        // Use the username to retrieve all information all about the user
-        const user = await User.getOneByUsername(data.username)
-        if (!user) { throw new Error("No user with this username")}
+        const user = await User.getOneSchoolByUsername(data.school_name)
+        if (!user) { throw new Error("No school with this username")}
         const match = await bcrypt.compare(data.password, user.password)
 
         if (match) {
-            //Create a playload
-            const payload = { username: user.username}
-            // define a function which sends token to the client
+           
+            const payload = { 
+                school_id: user.school_id,
+                school_name: user.school_name
+            }
+          
             const sendToken = (err, token) => {
                 if (err) {
                     throw new Error("Error in token generation")
@@ -82,7 +52,7 @@ async function login (req, res) {
             }
             jwt.sign(payload, process.env.SECRET_TOKEN, { expiresIn: 3600 }, sendToken)
         } else {
-            throw new Error("User could not be authenticated.")
+            throw new Error("School could not be authenticated.")
         }
     } catch(err){
         res.status(401).json({ error: err.message })
@@ -90,29 +60,39 @@ async function login (req, res) {
     res.status(200).send(data);
 }
 
-async function update(req, res) {
+async function donorlogin (req, res) {
+    const data = req.body;
     try {
-        const id = parseInt(req.params.id)
-        const data = req.body
-        const user = await User.getOneById(id)
-        const result = await user.update(data)
-        res.status(200).json(result)
-    } catch(err) {
-        res.status(404).json({ error: err.message})
+        const user = await User.getOneDonorByUsername(data.donor_name)
+        if (!user) { throw new Error("No donor with this username")}
+        const match = await bcrypt.compare(data.password, user.password)
+
+        if (match) {
+           
+            const payload = { 
+                donor_id: user.donor_id,
+                donor_name: user.donor_name
+            }
+          
+            const sendToken = (err, token) => {
+                if (err) {
+                    throw new Error("Error in token generation")
+                } res.status(200).json ({ 
+                    success: true,
+                    token: token
+                })
+            }
+            jwt.sign(payload, process.env.SECRET_TOKEN, { expiresIn: 3600 }, sendToken)
+        } else {
+            throw new Error("Donor could not be authenticated.")
+        }
+    } catch(err){
+        res.status(401).json({ error: err.message })
     }
+    res.status(200).send(data);
 }
 
-async function destroy(req, res) {
-    try{
-    const id = parseInt(req.params.id)
-    const user = await User.getOneById(id)
-    const result = await user.destroy({id})
-    res.status(204).json(result)
-    } catch(err) {
-        res.status(404).json({ error: err.message })
-    }
-}
 
 module.exports = {
-    index, show, donorSignup, schoolSignup, login, update, destroy
+    schoolregister, donorregister, schoollogin, donorlogin
 }                           
