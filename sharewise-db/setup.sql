@@ -26,10 +26,10 @@ INSERT INTO school (school_name, school_address, email, password_hash) VALUES
 
 CREATE TABLE request (
     request_id INT GENERATED ALWAYS AS IDENTITY,
-    school_id INT NOT NULL,
+    school_id INT,
     item_name VARCHAR(255) NOT NULL,
-    request_status VARCHAR(50) NOT NULL,
-    quantity INT NOT NULL,
+    request_status VARCHAR(50) DEFAULT 'Pending',
+    quantity INT DEFAULT 0,
     request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (request_id),
     FOREIGN KEY (school_id) REFERENCES school(school_id) ON DELETE CASCADE
