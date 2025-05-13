@@ -22,16 +22,43 @@ async function show(req, res) {
     }
 }
 
-async function signup (req, res) {
-    const data = req.body;
-    // Generate a salt
-    const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS))
-    // Use salt to hash the plaintext password and reassign to data object
-    data["password"] = await bcrypt.hash(data.password, salt)
-    // Pass data into the model
-    const result = await User.create(data)
-    res.status(201).json(result);
-};
+// async function signup (req, res) {
+//     const data = req.body;
+//     // Generate a salt
+//     const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS))
+//     // Use salt to hash the plaintext password and reassign to data object
+//     data["password"] = await bcrypt.hash(data.password, salt)
+//     // Pass data into the model
+//     const result = await User.create(data)
+//     res.status(201).json(result);
+// };
+
+async function donorSignup(req, res) {
+    try {
+        const data = req.body;
+        data.user_type = "donor";
+        const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+        data.password = await bcrypt.hash(data.password, salt);
+        const result = await User.create(data);
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
+async function schoolSignup(req, res) {
+    try {
+        const data = req.body;
+        data.user_type = "school";
+        const salt = await bcrypt.genSalt(parseInt(process.env.BCRYPT_SALT_ROUNDS));
+        data.password = await bcrypt.hash(data.password, salt);
+        const result = await User.create(data);
+        res.status(201).json(result);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+}
+
 
 async function login (req, res) {
     const data = req.body;
@@ -87,5 +114,5 @@ async function destroy(req, res) {
 }
 
 module.exports = {
-    signup, login, index, show, destroy, update
+    index, show, donorSignup, schoolSignup, login, update, destroy
 }                           

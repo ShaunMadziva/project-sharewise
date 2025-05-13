@@ -1,15 +1,15 @@
-DROP TABLE IF EXISTS appuser;
+DROP TABLE IF EXISTS users CASCADE;
 
-CREATE TABLE appuser (
-    user_id INT GENERATED ALWAYS AS IDENTITY,
-    profile_name VARCHAR(255) NOT NULL,
+CREATE TABLE users (
+    id INT GENERATED ALWAYS AS IDENTITY,
+    username VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     user_type VARCHAR(50) NOT NULL,
-    PRIMARY KEY (user_id)
+    PRIMARY KEY (id)
 );
 
-INSERT INTO appuser (profile_name, email, password_hash, user_type) VALUES
+INSERT INTO users (username, email, password, user_type) VALUES
 ('Alice Smith', 'alice.smith@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'school'),
 ('Bob Johnson', 'bob.johnson@example.com', 'e99a18c428cb38d5f260853678922e03', 'donor'),
 ('Charlie Lee', 'charlie.lee@example.com', '25d55ad283aa400af464c76d713c07ad', 'donor'),

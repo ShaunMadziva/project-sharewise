@@ -1,7 +1,7 @@
 const fs = require('fs')
 require('dotenv').config()
 
-const sql = fs.readFileSync('./sharewise-db/setup.sql').toString()
+const sql = fs.readFileSync('./database/setup.sql').toString()
 
 const db = require('./db')
 

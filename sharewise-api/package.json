@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon -L index.js",
     "start": "node index.js",
-    "setup-db": "node ./sharewise-db/setup-db.js"
+    "setup-db": "node ./database/setup-db.js"
   },
   "keywords": [],
   "author": "",
