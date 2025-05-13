@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS school;
-DROP TABLE IF EXISTS donor;
 DROP TABLE IF EXISTS donation;
 DROP TABLE IF EXISTS request;
+DROP TABLE IF EXISTS donor;
+DROP TABLE IF EXISTS school;
 
 
 CREATE TABLE school (
@@ -27,6 +27,7 @@ INSERT INTO school (school_name, school_address, email, password_hash) VALUES
 CREATE TABLE request (
     request_id INT GENERATED ALWAYS AS IDENTITY,
     school_id INT,
+    school_name VARCHAR(255),
     item_name VARCHAR(255) NOT NULL,
     request_status VARCHAR(50) DEFAULT 'Pending',
     quantity INT DEFAULT 0,
@@ -35,17 +36,17 @@ CREATE TABLE request (
     FOREIGN KEY (school_id) REFERENCES school(school_id) ON DELETE CASCADE
 );
 
-INSERT INTO request (school_id, item_name, request_status, quantity) VALUES
-(1, 'Monitors', 'Pending', 5),
-(2, 'Laptops', 'Approved', 3),
-(3, 'Stationery', 'Pending', 10),
-(4, 'Mouses', 'Pending', 7),
-(5, 'Headphones', 'Approved', 4),
-(6, 'Laptops', 'Approved', 2),
-(7, 'Printer', 'Pending', 1),
-(8, 'Tablets', 'Approved', 6),
-(9, 'Keyboards', 'Approved', 8),
-(10, 'Computers', 'Pending', 12);
+INSERT INTO request (school_id, school_name, item_name, request_status, quantity) VALUES
+(1,'UCL', 'Monitors', 'Pending', 5),
+(2, 'UCL', 'Laptops', 'Approved', 3),
+(3, 'UCL','Stationery', 'Pending', 10),
+(4, 'Evergreen Elementary','Mouses', 'Pending', 7),
+(5, 'Evergreen Elementary','Headphones', 'Approved', 4),
+(6, 'LaFosse','Laptops', 'Approved', 2),
+(7, 'LaFosse','Printer', 'Pending', 1),
+(8, 'LaFosse', 'Tablets', 'Approved', 6),
+(9, 'UCL', 'Keyboards', 'Approved', 8),
+(10, 'LaFosse', 'Computers', 'Pending', 12);
 
 
 CREATE TABLE donor (
