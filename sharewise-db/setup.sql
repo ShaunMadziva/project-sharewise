@@ -1,6 +1,9 @@
 DROP TABLE IF EXISTS appuser;
 DROP TABLE IF EXISTS schoolprofile;
 DROP TABLE IF EXISTS donorprofile;
+DROP TABLE IF EXISTS donation;
+DROP TABLE IF EXISTS request;
+
 
 CREATE TABLE appuser (
     user_id INT GENERATED ALWAYS AS IDENTITY,
