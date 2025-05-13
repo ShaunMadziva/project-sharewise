@@ -1,17 +1,18 @@
 const db = require('../../sharewise-db/db')
 
 class Requests {
-    constructor({request_id, school_id, item_name, status, quantity }) {
+    constructor({request_id, school_id, item_name, request_status, quantity, request_date }) {
         this.request_id = request_id
         this.school_id = school_id
         this.item_name = item_name
-        this.status = status
+        this.reques_status = request_status
         this.quantity = quantity
+        this.request_date = request_date
     }
 
-    static async getRequestsInfo() {
+    static async getRequestsInfo(schoolId) {
         const response = await db.query(
-            "SELECT request.request_id, request.item_name, request.quantity, request.status, school_profile.school_name FROM request JOIN school_profile ON request.school_id = school_profile.school_id;")
+            "SELECT request.request_id, school.school_name, request.item_name, request.status, request.quantity, request.request_date FROM request JOIN school ON request.school_id = school.school_id WHERE school.school_id = $1;", [schoolId])
     
         if(response.rows.length === 0){
             throw new Error("No request info available")
@@ -33,7 +34,7 @@ class Requests {
     static async postRequest(data) {
         const { item_name, quantity } = data
         const response = await db.query(
-            "INSERT INTO request (item_name, quantity, school_id) VALUES ($1, $2, $3) RETURNING *;", [item_name, quantity]
+            "INSERT INTO request (item_name, quantity) VALUES ($1, $2, $3) RETURNING *;", [item_name, quantity]
         )
 
         if(response.length === 0){
