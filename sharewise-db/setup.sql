@@ -1,116 +1,93 @@
-DROP TABLE IF EXISTS appuser;
-DROP TABLE IF EXISTS schoolprofile;
-DROP TABLE IF EXISTS donorprofile;
+DROP TABLE IF EXISTS school;
+DROP TABLE IF EXISTS donor;
 DROP TABLE IF EXISTS donation;
 DROP TABLE IF EXISTS request;
 
 
-CREATE TABLE appuser (
-    user_id INT GENERATED ALWAYS AS IDENTITY,
-    profile_name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
-    user_type VARCHAR(50) NOT NULL,
-    PRIMARY KEY (user_id)
-);
-
-INSERT INTO appuser (profile_name, email, password_hash, user_type) VALUES
-('Alice Smith', 'alice.smith@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'school'),
-('Bob Johnson', 'bob.johnson@example.com', 'e99a18c428cb38d5f260853678922e03', 'donor'),
-('Charlie Lee', 'charlie.lee@example.com', '25d55ad283aa400af464c76d713c07ad', 'donor'),
-('Diana Ray', 'diana.ray@example.com', 'd8578edf8458ce06fbc5bb76a58c5ca4', 'school'),
-('Ethan Cole', 'ethan.cole@example.com', '5ebe2294ecd0e0f08eab7690d2a6ee69', 'donor'),
-('Fiona Hart', 'fiona.hart@example.com', '21232f297a57a5a743894a0e4a801fc3', 'school'),
-('George Hill', 'george.hill@example.com', '098f6bcd4621d373cade4e832627b4f6', 'donor'),
-('Hannah Kim', 'hannah.kim@example.com', '5f4dcc3b5aa765d61d8327deb882cf99', 'donor'),
-('Ian Snow', 'ian.snow@example.com', '202cb962ac59075b964b07152d234b70', 'school'),
-('Julia West', 'julia.west@example.com', '81dc9bdb52d04dc20036dbd8313ed055', 'school');
-
-CREATE TABLE schoolprofile (
-    schoolprofile_id INT GENERATED ALWAYS AS IDENTITY,
-    user_id INT NOT NULL,
+CREATE TABLE school (
+    school_id INT GENERATED ALWAYS AS IDENTITY,
     school_name VARCHAR(255) NOT NULL,
     school_address VARCHAR(255) NOT NULL,
-    PRIMARY KEY (schoolprofile_id),
-    FOREIGN KEY (user_id) REFERENCES appuser(user_id) ON DELETE CASCADE 
-    -- If the related user in appuser is deleted, the matching schoolprofile rows will be deleted automatically (ON DELETE CASCADE)
+    email VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    PRIMARY KEY (school_id)
 );
-
-INSERT INTO schoolprofile (user_id, school_name, school_address) VALUES
-(1, 'Greenwood High School', '123 Elm Street, Springfield'),
-(2, 'Riverside Academy', '456 Oak Avenue, Rivertown'),
-(3, 'Hilltop Public School', '789 Maple Drive, Hillview'),
-(4, 'Sunrise Elementary', '321 Pine Road, Lakeside'),
-(5, 'Brookfield High', '654 Cedar Lane, Brookfield'),
-(6, 'Valley Crest School', '987 Birch Street, Valleytown'),
-(7, 'Evergreen Academy', '147 Willow Way, Greendale'),
-(8, 'Mountain Ridge School', '258 Aspen Blvd, Mountainview'),
-(9, 'Oceanview Elementary', '369 Palm Street, Oceanview'),
-(10, 'Westwood High School', '159 Spruce Circle, Westwood');
-
-CREATE TABLE donorprofile (
-    donorprofile_id INT GENERATED ALWAYS AS IDENTITY,
-    user_id INT NOT NULL,
-    donor_name VARCHAR(255) NOT NULL,
-    donor_address VARCHAR(255) NOT NULL,
-    PRIMARY KEY (donorprofile_id),
-    FOREIGN KEY (user_id) REFERENCES appuser(user_id) ON DELETE CASCADE
-);
-INSERT INTO donorprofile (user_id, donor_name, donor_address) VALUES
-(1, 'Alice Smith', '123 Charity Street, Generosity City'),
-(2, 'John Doe', '123 Charity Lane, Donor City'),
-(3, 'Jane Smith', '456 Philanthropy Road, Kindness Town'),
-(4, 'Robert Brown', '789 Generosity Street, Giving City'),
-(5, 'Emily Davis', '321 Compassion Avenue, Heartfelt Town'),
-(6, 'Michael Wilson', '654 Hope Boulevard, Support City'),
-(7, 'Sarah Johnson', '987 Kindness Way, Benevolence Town'),
-(8, 'David Lee', '147 Charity Circle, Altruism City'),
-(9, 'Laura White', '258 Philanthropy Drive, Caring Town'),
-(10, 'James Green', '369 Generosity Lane, Empathy City');
-
-CREATE TABLE donation (
-    donation_id INT GENERATED ALWAYS AS IDENTITY,
-    donorprofile_id INT NOT NULL,
-    schoolprofile_id INT NOT NULL,
-    quantity INT NOT NULL,
-    item_description VARCHAR(255) NOT NULL,
-    PRIMARY KEY (donation_id),
-    FOREIGN KEY (donorprofile_id) REFERENCES donorprofile(donorprofile_id) ON DELETE CASCADE,
-    FOREIGN KEY (schoolprofile_id) REFERENCES schoolprofile(schoolprofile_id) ON DELETE CASCADE
-);
-
-INSERT INTO donation (donorprofile_id, schoolprofile_id, quantity, item_description) VALUES
-(1, 1, 10, 'Good'),
-(2, 2, 5, 'Used'),
-(3, 3, 20, 'New'),
-(4, 4, 15, 'Refurbished'),
-(5, 5, 8, 'Damaged'),
-(6, 6, 12, 'Old'),
-(7, 7, 30, 'Old'),
-(8, 8, 25, 'New'),
-(9, 9, 18, 'Used'),
-(10, 10, 22, 'Very Good');
+INSERT INTO school (school_name, school_address, email, password_hash) VALUES
+('Green Valley High School', '123 Elm Street, Springfield', 'contact@greenvalley.edu', '5f4dcc3b5aa765d61d8327deb882cf99'),
+('Riverside Academy', '456 Oak Avenue, Rivertown', 'admin@riverside.org', '6cb75f652a9b52798eb6cf2201057c73'),
+('Hilltop Elementary', '789 Maple Drive, Hillview', 'info@hilltop.edu', 'b2e98ad6f6eb8508dd6a14cfa704bad7'),
+('Sunrise Public School', '321 Pine Road, Lakeside', 'sunrise@schools.net', 'e99a18c428cb38d5f260853678922e03'),
+('Brookfield School', '654 Cedar Lane, Brookfield', 'office@brookfield.edu', '25d55ad283aa400af464c76d713c07ad'),
+('Valley Crest Academy', '987 Birch Street, Valleytown', 'valleycrest@edu.org', '7c6a180b36896a0a8c02787eeafb0e4c'),
+('Evergreen Elementary', '147 Willow Way, Greendale', 'hello@evergreenschool.org', '5ebe2294ecd0e0f08eab7690d2a6ee69'),
+('Mountain Ridge High', '258 Aspen Blvd, Mountainview', 'contact@mountainridge.com', '8d3533d75ae2c3966d7e0d4fcc69216b'),
+('Oceanview School', '369 Palm Street, Oceanview', 'oceanview@schools.org', 'd8578edf8458ce06fbc5bb76a58c5ca4'),
+('Westwood High', '159 Spruce Circle, Westwood', 'admin@westwoodhigh.edu', '6c569aabbf7775ef8fc570e228c16b98');
 
 CREATE TABLE request (
     request_id INT GENERATED ALWAYS AS IDENTITY,
-    schoolprofile_id INT NOT NULL,
-    donation_id INT NOT NULL,
+    school_id INT NOT NULL,
     item_name VARCHAR(255) NOT NULL,
     request_status VARCHAR(50) NOT NULL,
     quantity INT NOT NULL,
+    request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (request_id),
-    FOREIGN KEY (schoolprofile_id) REFERENCES schoolprofile(schoolprofile_id) ON DELETE CASCADE,
-    FOREIGN KEY (donation_id) REFERENCES donation(donation_id) ON DELETE CASCADE
+    FOREIGN KEY (school_id) REFERENCES school(school_id) ON DELETE CASCADE
 );
 
-INSERT INTO request (schoolprofile_id, donation_id, item_name, request_status, quantity) VALUES
-(1, 1, 'Monitors', 'Pending', 5),
-(2, 2, 'Laptops', 'Approved', 3),
-(3, 3, 'Stationery', 'Pending', 10),
-(4, 4, 'Mouses', 'Pending', 7),
-(5, 5, 'Headphones', 'Approved', 4),
-(6, 6, 'Laptops', 'Approved', 2),
-(7, 7, 'Printer', 'Pending', 1),
-(8, 8, 'Tablets', 'Approved', 6),
-(9, 9, 'Keyboards', 'Approved', 8),
-(10, 10, 'Computers', 'Pending', 12);
+INSERT INTO request (school_id, item_name, request_status, quantity) VALUES
+(1, 'Monitors', 'Pending', 5),
+(2, 'Laptops', 'Approved', 3),
+(3, 'Stationery', 'Pending', 10),
+(4, 'Mouses', 'Pending', 7),
+(5, 'Headphones', 'Approved', 4),
+(6, 'Laptops', 'Approved', 2),
+(7, 'Printer', 'Pending', 1),
+(8, 'Tablets', 'Approved', 6),
+(9, 'Keyboards', 'Approved', 8),
+(10, 'Computers', 'Pending', 12);
+
+
+CREATE TABLE donor (
+    donor_id INT GENERATED ALWAYS AS IDENTITY,
+    donor_name VARCHAR(255) NOT NULL,
+    donor_address VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    PRIMARY KEY (donor_id)
+);
+INSERT INTO donor (donor_name, donor_address, email, password_hash) VALUES
+('Hope Foundation', '10 Charity Lane, Springfield', 'info@hopefoundation.org', '5f4dcc3b5aa765d61d8327deb882cf99'),
+('Bright Future Org', '25 Beacon Street, Lakeside', 'contact@brightfuture.org', '6cb75f652a9b52798eb6cf2201057c73'),
+('Helping Hands', '88 Elmwood Ave, Rivertown', 'support@helpinghands.net', 'b2e98ad6f6eb8508dd6a14cfa704bad7'),
+('KindHeart Donors', '12 Pine Crescent, Hillview', 'admin@kindheart.org', 'e99a18c428cb38d5f260853678922e03'),
+('GiveMore Trust', '45 Willow Way, Brookfield', 'hello@givemore.org', '25d55ad283aa400af464c76d713c07ad'),
+('Unity Relief', '30 Maple Blvd, Valleytown', 'contact@unityrelief.net', '7c6a180b36896a0a8c02787eeafb0e4c'),
+('Care & Share', '17 Birch Street, Greendale', 'info@careshare.org', '5ebe2294ecd0e0f08eab7690d2a6ee69'),
+('Generous Souls', '93 Cedar Lane, Oceanview', 'team@gensouls.com', '8d3533d75ae2c3966d7e0d4fcc69216b'),
+('Sunlight Aid', '61 Aspen Circle, Sunville', 'sunlight@aid.org', 'd8578edf8458ce06fbc5bb76a58c5ca4'),
+('BetterWorld Initiative', '42 Palm Road, Westwood', 'hello@betterworld.org', '6c569aabbf7775ef8fc570e228c16b98');
+
+CREATE TABLE donation (
+    donation_id INT GENERATED ALWAYS AS IDENTITY,
+    donor_id INT NOT NULL,
+    request_id INT NOT NULL,
+    quantity INT NOT NULL,
+    item_description VARCHAR(255) NOT NULL,
+    PRIMARY KEY (donation_id),
+    FOREIGN KEY (donor_id) REFERENCES donor(donor_id) ON DELETE CASCADE,
+    FOREIGN KEY (request_id) REFERENCES request(request_id) ON DELETE CASCADE
+);
+
+INSERT INTO donation (donor_id, request_id, quantity, item_description) VALUES
+(1, 1, 100, 'new'),
+(2, 2, 50, 'used'),
+(3, 3, 200, 'good'),
+(4, 4, 80, 'new'),
+(5, 5, 120, 'used'),
+(1, 2, 30, 'good'),
+(2, 3, 60, 'new'),
+(3, 1, 40, 'used'),
+(4, 5, 25, 'good'),
+(5, 4, 90, 'new');
+
