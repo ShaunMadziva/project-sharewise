@@ -1,0 +1,151 @@
+/* General styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: white;
+    color: #333;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    justify-content: center; /* Center everything vertically */
+    align-items: center; /* Center everything horizontally */
+    height: 100vh; /* Full viewport height */
+  }
+  
+  /* Header */
+  header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 2px solid green;
+    width: 100%; /* Ensure header takes full width */
+    position: fixed; /* Fix the header at the top */
+    top: 0;
+    left: 0;
+    background-color: white; /* Make sure header has a solid background */
+    z-index: 1000; /* Make sure header stays above other content */
+  }
+  
+  .logo {
+    width: 120px;
+    height: 120px;
+    border: 2px solid green;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+    color: green;
+    background-color: white;
+  }
+  
+  .navbar a {
+    margin: 0 10px;
+    padding: 8px 16px;
+    border: 2px solid green;
+    text-decoration: none;
+    color: green;
+    border-radius: 4px;
+    font-weight: bold;
+    background-color: white;
+  }
+  
+  .navbar a:hover {
+    background-color: green;
+    color: white;
+  }
+  
+  /* Main content */
+  main {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  
+  /* Description */
+  .description {
+    font-size: 18px;
+    margin-bottom: 30px;
+  }
+  
+  .carousel {
+    width: 80%;
+    max-width: 800px;
+    margin: 0 auto 40px;
+    height: 200px;
+    border: 2px solid green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+  }
+  
+  /* Style for the register form container */
+  .page-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; /* Allow the content to grow and take available space */
+    padding-top: 80px; /* Offset the content so it doesn't overlap with the fixed header */
+    width: 100%;
+  }
+  
+  /* Style the register form */
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 400px; /* Set a fixed width for the form */
+    padding: 30px;
+    border-radius: 8px;
+    background-color: #ffffff; /* White background for the form */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  }
+  
+  /* Form field styling */
+  .form-group {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #333;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .form-group input:focus {
+    border-color: #4CAF50; /* Highlight input field border on focus */
+    outline: none;
+  }
+  
+  /* Style the register button */
+  .login-btn {
+    width: 100%; /* Button takes full width of the form */
+    padding: 12px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 4px; /* Rounded corners for the button */
+    margin-top: 20px;
+    transition: background-color 0.3s;
+  }
+  
+  .login-btn:hover {
+    background-color: #45a049; /* Darken button color on hover */
+  }
+  
