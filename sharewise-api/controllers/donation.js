@@ -3,13 +3,13 @@ const { Donation } = require("../models/Donation");
 const createDonation = async (req, res) => {
   try {
     const data = {
-      donatorId: req.body.donatorId,
-      schoolId: req.body.schoolId,
+      donorId: req.body.donorId,
+      requestId: req.body.requestId,
       quantity: req.body.quantity,
       description: req.body.description,
     };
 
-    const newDonation = await Donation.create(data);
+    const newDonation = await Donation.createDonation(data);
 
     res.status(201).json({
       success: true,
@@ -44,9 +44,9 @@ const getDonationById = async (req, res) => {
   }
 };
 
-const getDonationByDonatorId = async (req, res) => {
+const getDonationByDonorId = async (req, res) => {
   try {
-    const donations = await Donation.getByDonatorId(req.params.donatorId);
+    const donations = await Donation.getByDonorId(req.params.donorId);
     res.status(200).json({
       success: true,
       donations,
@@ -73,5 +73,5 @@ module.exports = {
   getAllDonations,
   getDonationById,
   deleteDonation,
-  getDonationByDonatorId,
+  getDonationByDonorId,
 };

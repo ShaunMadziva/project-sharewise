@@ -7,8 +7,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/donations", donationRouter); 
+app.use("/donations", donationRouter);
 
-module.exports = {
-  app
-};
+module.exports = app;
