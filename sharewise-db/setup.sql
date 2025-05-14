@@ -9,10 +9,10 @@ CREATE TABLE school (
     school_name VARCHAR(255) NOT NULL,
     school_address VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     PRIMARY KEY (school_id)
 );
-INSERT INTO school (school_name, school_address, email, password_hash) VALUES
+INSERT INTO school (school_name, school_address, email, password) VALUES
 ('Green Valley High School', '123 Elm Street, Springfield', 'contact@greenvalley.edu', '5f4dcc3b5aa765d61d8327deb882cf99'),
 ('Riverside Academy', '456 Oak Avenue, Rivertown', 'admin@riverside.org', '6cb75f652a9b52798eb6cf2201057c73'),
 ('Hilltop Elementary', '789 Maple Drive, Hillview', 'info@hilltop.edu', 'b2e98ad6f6eb8508dd6a14cfa704bad7'),
@@ -53,10 +53,10 @@ CREATE TABLE donor (
     donor_name VARCHAR(255) NOT NULL,
     donor_address VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
     PRIMARY KEY (donor_id)
 );
-INSERT INTO donor (donor_name, donor_address, email, password_hash) VALUES
+INSERT INTO donor (donor_name, donor_address, email, password) VALUES
 ('Hope Foundation', '10 Charity Lane, Springfield', 'info@hopefoundation.org', '5f4dcc3b5aa765d61d8327deb882cf99'),
 ('Bright Future Org', '25 Beacon Street, Lakeside', 'contact@brightfuture.org', '6cb75f652a9b52798eb6cf2201057c73'),
 ('Helping Hands', '88 Elmwood Ave, Rivertown', 'support@helpinghands.net', 'b2e98ad6f6eb8508dd6a14cfa704bad7'),
