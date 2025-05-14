@@ -1,60 +1,60 @@
-const Request = require('../models/Request')
+const { Request } = require("../models/Request")
 
-async function index(req, res){
-    try{
-        const schoolId = req.params.id
-        const request = await Request.getRequestsInfo(schoolId)
-        res.status(200).json(request)
-    }catch(err){
-        res.status(500).json({error: err.message })
-    }
+const getAllRequests = async (req, res) => {
+  try {
+    const requests = await Request.getAll()
+    res.status(200).json({ success: true, requests })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 }
 
-async function show(req, res){
-    const reqId = req.params.id
-    try{
-        const request = await Request.getRequestById(reqId)
-        res.status(200).json(request)
-    }catch(err){
-        res.status(404).json({error: err.message})
-    }
+const getRequestById = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id)
+    const request = await Request.getById(id)
+    res.status(200).json({ success: true, request })
+  } catch (err) {
+    res.status(404).json({ error: err.message })
+  }
 }
 
-async function create(req, res){
+const createNewRequest = async (req, res) => {
+  try {
+    const schoolId = req.body.schoolId
     const data = req.body
-    try{
-        const request = await Request.postRequest(data)
-        res.status(201).json(request)
-    }catch(err){
-        res.status(400).json({error: err.message})
-    }
+    const newRequest = await Request.createRequest(schoolId, data)
+    res.status(201).json({ success: true, request: newRequest })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
 }
 
-async function update(req, res){
-    try{
-        const reqId = req.params.id
-        const data = req.body
-        const request = await Request.getRequestById(reqId)
-        const result = await request.postRequest(data)
-        res.status(200).json(result)
-    }catch(err){
-        res.status(404).json({error: err.message})
-    }
+const deleteRequest = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id)
+    const deleted = await Request.deleteById(id)
+    res.status(200).json({ success: true, deleted })
+  } catch (err) {
+    res.status(404).json({ error: err.message })
+  }
 }
 
-
-async function destroy(req, res){
-    try{
-        const reqId = req.params.id
-        const request = await Request.getRequestById(reqId)
-        const result = await request.destroy()
-        res.status(204).end()
-    }catch(err){
-        res.status(404).json({error: err.message})
-    }
+const updateRequestStatus = async (req, res) => {
+  try {
+    const id = parseInt(req.params.id)
+    const { status } = req.body
+    const updated = await Request.updateStatus(id, status)
+    res.status(200).json({ success: true, updated })
+  } catch (err) {
+    res.status(400).json({ error: err.message })
+  }
 }
-
 
 module.exports = {
-   index, show, create, update, destroy
+  getAllRequests,
+  getRequestById,
+  createNewRequest,
+  deleteRequest,
+  updateRequestStatus
 }

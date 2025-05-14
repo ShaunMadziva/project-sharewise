@@ -1,12 +1,12 @@
-const { Router } = require('express')
-const requestController = require('../controllers/request')
+const { Router } = require("express");
+const requestController = require("../controllers/request");
 
-requestRouter = Router()
+const requestRouter = Router();
 
-requestRouter.get("/", requestController.index)
-requestRouter.get("/:id", requestController.show)
-requestRouter.post("/", requestController.create)
-requestRouter.patch("/:id", requestController.update)
-requestRouter.delete(":/id", requestController.destroy)
+requestRouter.get("/", requestController.getAllRequests);
+requestRouter.get("/:id", requestController.getRequestById);
+requestRouter.post("/", requestController.createNewRequest);
+requestRouter.delete("/:id", requestController.deleteRequest);
+requestRouter.patch("/:id/status", requestController.updateRequestStatus);
 
-module.exports = requestController
+module.exports = requestRouter;
