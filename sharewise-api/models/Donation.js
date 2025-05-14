@@ -1,4 +1,4 @@
-const db = require("../database/connect");
+const db = require("../database/db");
 
 class Donation {
   constructor({
