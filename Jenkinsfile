@@ -1,16 +1,15 @@
 pipeline {
-    agent {
-        docker {
-            image 'docker:20.10.24-dind' 
-            args '--privileged'
-            }
-        }
+    agent any
+
+    environment {
+        secret = credentials('secret_token')
+
+    }
 
     stages {
         stage('Build Docker images') {
             steps {
                 script {
-                    def secret = credentials('secret_token')
 
                     sh '''
                         #!/bin/bash
