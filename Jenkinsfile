@@ -9,7 +9,7 @@ pipeline {
                     sh '''
                         #!/bin/bash
                         echo "Building docker image"
-                        docker build --build-arg SECRET_TOKEN=${secret} -t hlyztrk/project-sharewise:${GIT_COMMIT} -f ./sharewise-api/Dockerfile .
+                        docker build -t shaunmadziva/project-sharewise:0.0.1.RELEASE -f ./sharewise-api/Dockerfile .
                     '''
                 }
             }
