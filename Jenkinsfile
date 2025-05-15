@@ -2,7 +2,10 @@ pipeline {
     agent any
 
     environment {
+        IMAGE_NAME = 'hlyztrk/project-sharewise'
         secret = credentials('secret_token')
+        dockerUsername = credentials('dockerhub_username')
+        dockerPassword = credentials('dockerhub_password')
 
     }
 
@@ -14,7 +17,20 @@ pipeline {
                     sh '''
                         #!/bin/bash
                         echo "Building docker image"
-                        docker build --build-arg SECRET_TOKEN=${secret} -t hlyztrk/project-sharewise:${BUILD_NUMBER} -f ./sharewise-api/Dockerfile .
+                        docker build --build-arg SECRET_TOKEN=${secret} -t ${IMAGE_NAME}:${BUILD_NUMBER} -f ./sharewise-api/Dockerfile .
+                    '''
+                }
+            }
+        }
+
+        stage ('Push to Docker hub') {
+            steps {
+                script {
+                    sh '''
+                        #!/bin/bash
+                        echo "$dockerPassword" | docker login -u "$dockerUsername" --password-stdin
+                        docker push ${IMAGE_NAME}:${BUILD_NUMBER}
+                        docker logout
                     '''
                 }
             }
