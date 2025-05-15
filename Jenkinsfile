@@ -14,7 +14,7 @@ pipeline {
                     sh '''
                         #!/bin/bash
                         echo "Building docker image"
-                        docker build --build-arg SECRET_TOKEN=${secret} -t hlyztrk/project-sharewise:${GIT_COMMIT} -f ./sharewise-api/Dockerfile .
+                        docker build --build-arg SECRET_TOKEN=${secret} -t hlyztrk/project-sharewise:${BUILD_NUMBER} -f ./sharewise-api/Dockerfile .
                     '''
                 }
             }
