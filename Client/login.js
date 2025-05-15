@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (res.ok) {
           localStorage.setItem("token", data.token);
           alert("Donor login successful!");
-          window.location.href = "/dashboard.html";
+          window.location.href = "./donor_dashboard.html";
         } else {
           alert(data.error || "Donor login failed.");
         }
