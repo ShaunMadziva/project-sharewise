@@ -1,14 +1,14 @@
-pipeline{
+pipeline {
     agent any
 
-    stages{
-        stage("Build Docker images"){
-            steps{
-                script{
+    stages {
+        stage('Build Docker images') {
+            steps {
+                script {
                     def secret = credentials('secret_token')
 
                     sh """
-                        docker build --build-arg SECRET_TOKEN=${secret} -t hlyztrk/project-sharewise:${GIT_COMMIT}
+                        docker build --build-arg SECRET_TOKEN=${secret} -t hlyztrk/project-sharewise:${GIT_COMMIT} .
                     """
                 }
             }
