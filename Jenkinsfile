@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'hlyztrk/project-sharewise'
         secret = credentials('secret_token')
         dockerUsername = credentials('dockerhub_username')
         dockerPassword = credentials('dockerhub_password')
