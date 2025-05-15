@@ -5,7 +5,6 @@ pipeline {
             args '--privileged'
             }
         }
-    }
 
     stages {
         stage('Build Docker images') {
