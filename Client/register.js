@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
   
       try {
-        const res = await fetch("http://localhost:3500/users/schoolsignup", {
+        const res = await fetch("http://localhost:3000/users/schoolsignup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
   
         alert("School registered successfully! Redirecting to login...");
-        window.location.href = "login.html";
+        window.location.href = "loginfinal.html";
       } catch (err) {
         alert("Error: " + err.message);
       }
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
       };
   
       try {
-        const res = await fetch("http://localhost:3500/users/donorsignup", {
+        const res = await fetch("http://localhost:3000/users/donorsignup", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
   
         alert("Donor registered successfully! Redirecting to login...");
-        window.location.href = "login.html";
+        window.location.href = "loginfinal.html";
       } catch (err) {
         alert("Error: " + err.message);
       }
