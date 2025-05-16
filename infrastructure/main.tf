@@ -9,7 +9,6 @@ terraform {
 
 
 provider "aws" {
-  profile = "lafosse-profile"
   region = "us-east-1"
 }
 
@@ -32,7 +31,7 @@ resource "aws_instance" "servers" {
     subnet_id = element(aws_subnet.subnets[*].id, count.index)
 
     tags = {
-      name = "servers_${count.index}"
+      name = "servers_${count.index + 1}"
     }
 
 }
