@@ -27,6 +27,7 @@ resource "aws_instance" "servers" {
     ami = data.aws_ami.aws_linux_2023_ami_latest.id
     key_name = aws_key_pair.generated_key.key_name
     instance_type = var.instance_type
+    associate_public_ip_address = "true"
     vpc_security_group_ids = [aws_security_group.sg_groups.id]
     subnet_id = element(aws_subnet.subnets[*].id, count.index)
 
