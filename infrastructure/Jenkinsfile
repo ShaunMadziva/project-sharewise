@@ -5,31 +5,30 @@ pipeline {
         stage('Terraform init') {
             steps {
                 script {
-
                     sh '''
                         #!/bin/bash
                         cd infrastructure
                         echo "Initializing terraform"
                         terraform init
-                       
                     '''
                 }
             }
         }
 
-        stage ('Terraform apply') {
+        stage('Terraform apply') {
             steps {
                 withCredentials([
                     string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
                     string(credentialsId: 'aws-secret-access-key-id', variable: 'AWS_SECRET_ACCESS_KEY')
-                ])
-                script {
-                    sh '''
-                        #!/bin/bash
-                        cd infrastructure
-                        echo "Provisioning infrastructure"
-                        terraform apply -auto-approve
-                    '''
+                ]) {
+                    script {
+                        sh '''
+                            #!/bin/bash
+                            cd infrastructure
+                            echo "Provisioning infrastructure"
+                            terraform apply -auto-approve
+                        '''
+                    }
                 }
             }
         }
