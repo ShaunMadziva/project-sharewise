@@ -23,13 +23,16 @@ class Donation {
     return response.rows.map((row) => new Donation(row));
   }
 
-  static async createDonation(donorId, requestId, data) {
-    const { quantity, description } = data;
+  static async createDonation(data) {
+
+    const { donorId, requestId, quantity, description } = data;
+
+    const quantityInt = parseInt(quantity, 10);
 
     const response = await db.query(
       `INSERT INTO donation (donor_id, request_id, quantity, item_description)
        VALUES ($1, $2, $3, $4) RETURNING *`,
-      [donorId, requestId, quantity, description]
+      [donorId, requestId, quantityInt, description]
     );
 
     if (response.rows.length === 0) {

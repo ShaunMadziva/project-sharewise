@@ -1,151 +1,166 @@
 /* General styling */
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: white;
-    color: #333;
-    display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    justify-content: center; /* Center everything vertically */
-    align-items: center; /* Center everything horizontally */
-    height: 100vh; /* Full viewport height */
-  }
-  
-  /* Header */
-  header {
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    border-bottom: 2px solid green;
-    width: 100%; /* Ensure header takes full width */
-    position: fixed; /* Fix the header at the top */
-    top: 0;
-    left: 0;
-    background-color: white; /* Make sure header has a solid background */
-    z-index: 1000; /* Make sure header stays above other content */
-  }
-  
-  .logo {
-    width: 120px;
-    height: 120px;
-    border: 2px solid green;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 18px;
-    color: green;
-    background-color: white;
-  }
-  
-  .navbar a {
-    margin: 0 10px;
-    padding: 8px 16px;
-    border: 2px solid green;
-    text-decoration: none;
-    color: green;
-    border-radius: 4px;
-    font-weight: bold;
-    background-color: white;
-  }
-  
-  .navbar a:hover {
-    background-color: green;
-    color: white;
-  }
-  
-  /* Main content */
-  main {
-    text-align: center;
-    padding: 40px 20px;
-  }
-  
-  /* Description */
-  .description {
-    font-size: 18px;
-    margin-bottom: 30px;
-  }
-  
-  .carousel {
-    width: 80%;
-    max-width: 800px;
-    margin: 0 auto 40px;
-    height: 200px;
-    border: 2px solid green;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-  }
-  
-  /* Style for the register form container */
-  .page-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1; /* Allow the content to grow and take available space */
-    padding-top: 80px; /* Offset the content so it doesn't overlap with the fixed header */
-    width: 100%;
-  }
-  
-  /* Style the register form */
-  .register-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 400px; /* Set a fixed width for the form */
-    padding: 30px;
-    border-radius: 8px;
-    background-color: #ffffff; /* White background for the form */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  }
-  
-  /* Form field styling */
-  .form-group {
-    width: 100%;
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
-    color: #333;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box;
-  }
-  
-  .form-group input:focus {
-    border-color: #4CAF50; /* Highlight input field border on focus */
-    outline: none;
-  }
-  
-  /* Style the register button */
-  .login-btn {
-    width: 100%; /* Button takes full width of the form */
-    padding: 12px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    border-radius: 4px; /* Rounded corners for the button */
-    margin-top: 20px;
-    transition: background-color 0.3s;
-  }
-  
-  .login-btn:hover {
-    background-color: #45a049; /* Darken button color on hover */
-  }
-  
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-image: url('./images/—Pngtree—recycled\ kraft\ sheet\ background\ with_13418811.jpg'); /* Update path as needed */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: #333;
+  display: block;
+}
+
+/* Header */
+header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 2px solid green;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-image: url('./images/recycling-pictures-1920-x-940-8vz81njcx8kyi5ye.jpg'); /* Replace with actual path */
+  background-size:auto;
+  background-repeat: auto;
+  background-position: center;
+  z-index: 1000;
+}
+
+.logo {
+  width: 120px;
+  height: 120px;
+  border: 2px solid green;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: green;
+  background-color: white;
+}
+
+.navbar a {
+  margin: 0 10px;
+  padding: 8px 16px;
+  border: 2px solid green;
+  text-decoration: none;
+  color: green;
+  border-radius: 4px;
+  font-weight: bold;
+  background-color: white;
+}
+
+.navbar a:hover {
+  background-color: green;
+  color: white;
+}
+
+/* Main content */
+main {
+  padding-top: 160px; /* Enough space for fixed header */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 160px); /* Ensure full height minus header */
+}
+
+/* Form Title */
+.form-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+/* Description */
+.description {
+  font-size: 32px; /* Increased from 20px */
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Form styling */
+form {
+  width: 80%;
+  max-width: 500px;
+  padding: 20px;
+  border: 2px solid green;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: calc(100% - 16px);
+  padding: 8px;
+  margin: 0 8px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  border-radius: 4px;
+  margin-top: 10px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.featured-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0;
+}
+
+.featured-image {
+  width: 100%;
+  max-height: 50vh;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.login-btn-index {
+  display: inline-block;
+  width: 250px; /* Wider button */
+  padding: 16px 24px; /* More padding for size */
+  font-size: 20px; /* Bigger text */
+  font-weight: bold;
+  text-align: center;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 30px;
+}
+
+.login-btn-index:hover {
+  background-color: #45a049;
+}
