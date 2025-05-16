@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Terraform init') {
+            steps {
+                script {
+
+                    sh '''
+                        #!/bin/bash
+                        echo "Initializing terraform"
+                        terraform init
+                       
+                    '''
+                }
+            }
+        }
+
+        stage ('Terraform apply') {
+            steps {
+                script {
+                    sh '''
+                        #!/bin/bash
+                        echo "Provisioning infrastructure"
+                        terraform apply -auto-approve
+                    '''
+                }
+            }
+        }
+    }
+}
