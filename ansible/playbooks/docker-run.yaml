@@ -1,0 +1,26 @@
+- hosts: all
+  become: true
+  tasks:
+    - name: Create new directory
+      ansible.builtin.file:
+        path: /home/ec2-user/project-sharewise
+        owner: ec2-user
+        group: ec2-user
+        state: directory
+
+   - name: Clone a github repository
+     git:
+       repo: https://github.com/ShaunMadziva/project-sharewise.git
+       dest: /home/ec2-user/project-sharewise
+       clone: yes
+       update: yes
+
+    - name: Navigate to directory containing docker-compose.yml
+      shell: cd project-sharewise/project-sharewise
+      args:
+        chdir: /home/ec2-user
+
+    - name: Run docker-compose 
+      shell: docker-compose up
+      args:
+        chdir: /home/ec2-user/project-sharewise
