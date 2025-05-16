@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // School login handler
     schoolForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const schoolName = document.getElementById("school-username").value;
+      const schoolName = document.getElementById("school-name").value;
       const password = document.getElementById("school-password").value;
   
       try {
-        const res = await fetch("http://localhost:3500/users/schoollogin", {
+        const res = await fetch("http://localhost:3000/users/schoollogin", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ school_name: schoolName, password }),
@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (res.ok) {
           localStorage.setItem("token", data.token);
           alert("School login successful!");
-          window.location.href = "/dashboard.html"; // or your intended page
+          window.location.href = "schooldash.html"; // or your intended page
         } else {
           alert(data.error || "School login failed.");
         }
@@ -45,11 +45,11 @@ document.addEventListener("DOMContentLoaded", () => {
     // Donor login handler
     donorForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      const donorName = document.getElementById("donor-username").value;
+      const donorName = document.getElementById("donor-name").value;
       const password = document.getElementById("donor-password").value;
   
       try {
-        const res = await fetch("http://localhost:3500/users/donorlogin", {
+        const res = await fetch("http://localhost:3000/users/donorlogin", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ donor_name: donorName, password }),
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (res.ok) {
           localStorage.setItem("token", data.token);
           alert("Donor login successful!");
-          window.location.href = "/dashboard.html";
+          window.location.href = "donordash.html";
         } else {
           alert(data.error || "Donor login failed.");
         }
