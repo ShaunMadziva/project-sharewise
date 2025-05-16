@@ -8,6 +8,7 @@ pipeline {
 
                     sh '''
                         #!/bin/bash
+                        cd infrastructure
                         echo "Initializing terraform"
                         terraform init
                        
@@ -21,6 +22,7 @@ pipeline {
                 script {
                     sh '''
                         #!/bin/bash
+                        cd infrastructure
                         echo "Provisioning infrastructure"
                         terraform apply -auto-approve
                     '''
