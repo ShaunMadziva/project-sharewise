@@ -1,7 +1,7 @@
 resource "aws_security_group" "sg_groups" {
   name        = "http_access"
   description = "SG"
-  vpc_id = aws_default_vpc.default.id 
+  vpc_id      = aws_vpc.main.id
 
   ingress {
     from_port   = "22"
