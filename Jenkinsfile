@@ -16,6 +16,8 @@ pipeline {
                     sh '''
                         #!/bin/bash
                         echo "Building docker image"
+                        echo "Listing running Docker containers:"
+                        sudo docker ps
                         docker build --build-arg SECRET_TOKEN=${secret} -t ${IMAGE_NAME}-db:${BUILD_NUMBER} -f ./sharewise-db/Dockerfile .
                         docker build --build-arg SECRET_TOKEN=${secret} -t ${IMAGE_NAME}-api:${BUILD_NUMBER} -f ./sharewise-api/Dockerfile .
                     '''
