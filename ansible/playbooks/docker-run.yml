@@ -21,12 +21,18 @@
         clone: yes
         update: yes
 
-    - name: Navigate to directory containing docker-compose.yml
-      shell: cd project-sharewise
-      args:
-        chdir: /home/ec2-user
+    - name: Ensure docker-compose.yml exists and is not empty
+      stat:
+        path: /home/ec2-user/project-sharewise/docker-compose.yml
+      register: compose_file
 
+    - name: Fail if docker-compose.yml is missing or empty
+      fail:
+        msg: "docker-compose.yml is missing or empty"
+      when: not compose_file.stat.exists or compose_file.stat.size == 0
+      
     - name: Run docker-compose
       shell: docker-compose up -d
       args:
         chdir: /home/ec2-user/project-sharewise
+
