@@ -4,26 +4,28 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const schoolId = document.getElementById("schoolId").value.trim();
       const itemType = document.getElementById("itemType").value;
       const quantity = parseInt(document.getElementById("quantity").value);
 
-      if (!schoolId || !itemType || isNaN(quantity) || quantity < 1) {
+      if (!itemType || isNaN(quantity) || quantity < 1) {
         alert("Please fill in all fields correctly.");
         return;
       }
 
       const requestData = {
-        schoolId: schoolId,
         itemName: itemType,
         quantity: quantity,
       };
+
+      const token = localStorage.getItem('token');
+      console.log(token)
 
       try {
         const response = await fetch("http://localhost:3000/requests/", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(requestData),
         });
