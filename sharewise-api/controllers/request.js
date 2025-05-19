@@ -21,7 +21,7 @@ const getRequestById = async (req, res) => {
 
 const createNewRequest = async (req, res) => {
   try {
-    const schoolId = req.user.schoolId
+    const schoolId = req.user.school_id
     const data = req.body
     const newRequest = await Request.createRequest(schoolId, data)
     res.status(201).json({ success: true, request: newRequest })
