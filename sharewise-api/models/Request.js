@@ -8,18 +8,22 @@ class Request {
     request_status,
     quantity,
     request_date,
+    school_name,
+    school_address
   }) {
     this.requestId = request_id;
     this.schoolId = school_id;
     this.itemName = item_name;
-    this.status = request_status;
+    this.requestStatus = request_status;
     this.quantity = quantity;
-    this.date = request_date;
+    this.requestDate = request_date;
+    this.schoolName = school_name;
+    this.schoolAddress = school_address
   }
 
   static async getAll() {
     const response = await db.query(
-      "SELECT * FROM request ORDER BY request_date DESC"
+      "SELECT request.request_id, request.item_name, request.quantity, request.request_status, request.request_date, school.school_name, school.school_address FROM request JOIN school ON request.school_id = school.school_id;"
     );
     if (response.rows.length === 0) {
       throw Error("No requests found");
@@ -29,7 +33,7 @@ class Request {
 
   static async getById(id) {
     const response = await db.query(
-      "SELECT * FROM request WHERE request_id = $1",
+      "SELECT request.request_id, request.school_id, request.item_name, request.request_status, request.quantity, request.request_date, school.school_name, school.school_address FROM request JOIN school ON request.school_id = school.school_id WHERE request.request_id = $1",
       [id]
     );
     if (response.rows.length === 0) {
