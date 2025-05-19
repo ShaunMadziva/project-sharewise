@@ -32,6 +32,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await res.json();
         if (res.ok) {
           localStorage.setItem("token", data.token);
+          localStorage.setItem("school_name", data.school_name);
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("school_address", data.school_address);
+
           alert("School login successful!");
           window.location.href = "schooldash.html"; // or your intended page
         } else {
@@ -58,6 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const data = await res.json();
         if (res.ok) {
           localStorage.setItem("token", data.token);
+          localStorage.setItem("donor_name", data.donor_name);
+          localStorage.setItem("email", data.email);
+          localStorage.setItem("donor_address", data.donor_address);
+          
           alert("Donor login successful!");
           window.location.href = "donordash.html";
         } else {
