@@ -8,16 +8,22 @@ pipeline {
   stages {
     stage('Install Requirements') {
       steps {
-        sh 'sudo apt-get update'
-        sh 'sudo apt-get install -y ansible ssh'
+        sh ''' 
+            #!/bin/bash
+            apt-get update
+            apt-get install -y ansible ssh
+            '''
       }
     }
 
     stage('Run Ansible Playbook') {
       steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'ec2-key-pair', keyFileVariable: 'PRIVATE_KEY_FILE', usernameVariable: 'SSH_USER')]) {
         sh '''
-        ansible-playbook -i inventory_hosts ansible/playbook.yml --private-key $PRIVATE_KEY_FILE
+        ansible-playbook -i ansible_hosts playbooks/docker-install.yml --private-key $PRIVATE_KEY_FILE -u $SSH_USER
+        ansible-playbook -i ansible_hosts playbooks/docker-install.yml --private-key $PRIVATE_KEY_FILE -u $SSH_USER
         '''
+        }
       }
     }
   }
