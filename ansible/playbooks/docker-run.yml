@@ -21,6 +21,6 @@
         chdir: /home/ec2-user
 
     - name: Run docker-compose
-      shell: docker-compose up
+      shell: docker-compose up -d
       args:
         chdir: /home/ec2-user/project-sharewise
