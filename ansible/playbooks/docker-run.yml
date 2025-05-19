@@ -22,7 +22,7 @@
         update: yes
 
     - name: Navigate to directory containing docker-compose.yml
-      shell: cd project-sharewise/project-sharewise
+      shell: cd project-sharewise
       args:
         chdir: /home/ec2-user
 
