@@ -8,9 +8,6 @@ services:
       - "80:80"
 
   sharewise-api:
-    build:
-      context: ./sharewise-api  # ✅ Set build context to where Dockerfile + index.js live
-      dockerfile: Dockerfile 
     image: shaunmadziva/project-sharewise-api
     ports:
       - "3000:3000"
@@ -21,9 +18,6 @@ services:
       - sharewise-network
 
   sharewise-db:
-    build:
-      context: ./sharewise-db  # ✅ Set build context to where Dockerfile + index.js live
-      dockerfile: Dockerfile 
     image: shaunmadziva/project-sharewise-db
     ports:
       - "5432:5432"
