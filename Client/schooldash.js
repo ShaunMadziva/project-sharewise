@@ -9,10 +9,25 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("school-address").textContent = address;
 });
 
+
+
 async function fetchAndRenderRequests() {
-    const schoolId = localStorage.getItem("school_id")
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        console.error("No token found in localStorage");
+        return;
+    }
+
     try {
-      const response = await fetch(`http://localhost:3000/requests/${schoolId}`); // Your API endpoint here
+        const tokenParts = token.split('.');
+        const payload = JSON.parse(atob(tokenParts[1]));
+        const schoolId = payload.school_id;
+
+        localStorage.setItem("school_id", schoolId);
+        console.log("School ID from token:", schoolId);
+      const response = await fetch(`http://localhost:3000/requests/school/${schoolId}`); // Your API endpoint here
       if (!response.ok) {
         throw new Error('Failed to fetch requests');
       }

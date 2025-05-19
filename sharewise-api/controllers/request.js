@@ -19,6 +19,16 @@ const getRequestById = async (req, res) => {
   }
 }
 
+async function getRequestsBySchoolId(req, res) {
+  const schoolId = parseInt(req.params.schoolId);
+  try {
+    const requests = await Request.getBySchoolId(schoolId);
+    res.status(200).json({ requests });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
+
 const createNewRequest = async (req, res) => {
   try {
     const schoolId = req.user.school_id
@@ -54,6 +64,7 @@ const updateRequestStatus = async (req, res) => {
 module.exports = {
   getAllRequests,
   getRequestById,
+  getRequestsBySchoolId,
   createNewRequest,
   deleteRequest,
   updateRequestStatus

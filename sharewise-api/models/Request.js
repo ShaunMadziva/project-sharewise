@@ -31,16 +31,22 @@ class Request {
     return response.rows.map((r) => new Request(r));
   }
 
-  static async getById(id) {
+  static async getBySchoolId(schoolId) {
     const response = await db.query(
-      "SELECT request.request_id, request.school_id, request.item_name, request.request_status, request.quantity, request.request_date, school.school_name, school.school_address FROM request JOIN school ON request.school_id = school.school_id WHERE request.request_id = $1",
-      [id]
+      "SELECT request.request_id, request.school_id, request.item_name, request.request_status, request.quantity, request.request_date, school.school_name, school.school_address FROM request JOIN school ON request.school_id = school.school_id WHERE request.school_id = $1",
+      [schoolId]
     );
-    if (response.rows.length === 0) {
-      throw Error("Request not found");
-    }
-    return new Request(response.rows[0]);
+    return response.rows.map(row => new Request(row));
   }
+  
+
+  static async getBySchoolId(schoolId) {
+    const response = await db.query(
+      "SELECT request.request_id, request.school_id, request.item_name, request.request_status, request.quantity, request.request_date, school.school_name, school.school_address FROM request JOIN school ON request.school_id = school.school_id WHERE request.school_id = $1",
+      [schoolId]
+    );
+    return response.rows.map(row => new Request(row));
+  }  
 
   static async createRequest(schoolId, data) {
     const { itemName, quantity } = data;
