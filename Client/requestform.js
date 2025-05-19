@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
       };
 
       const token = localStorage.getItem('token');
-      console.log(token)
 
       try {
         const response = await fetch("http://localhost:3000/requests/", {

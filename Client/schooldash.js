@@ -10,13 +10,15 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function fetchAndRenderRequests() {
+    const schoolId = localStorage.getItem("school_id")
     try {
-      const response = await fetch('http://localhost:3000/requests'); // Your API endpoint here
+      const response = await fetch(`http://localhost:3000/requests/${schoolId}`); // Your API endpoint here
       if (!response.ok) {
         throw new Error('Failed to fetch requests');
       }
-      const requests = await response.json();
-      renderRequests(requests);
+      const data = await response.json();
+      console.log("Fetched", data)
+      renderRequests(data.requests);
     } catch (error) {
       console.error('Error loading requests:', error);
     }
@@ -30,10 +32,10 @@ async function fetchAndRenderRequests() {
       const tr = document.createElement('tr');
   
       const tdName = document.createElement('td');
-      tdName.textContent = request.school_name || 'Unknown';
+      tdName.textContent = request.schoolName || 'Unknown';
   
       const tdItem = document.createElement('td');
-      tdItem.textContent = request.item_name;
+      tdItem.textContent = request.itemName;
   
       const tdQuantity = document.createElement('td');
       tdQuantity.textContent = request.quantity;
