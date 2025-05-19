@@ -6,9 +6,9 @@ services:
       - ./Client:/usr/share/nginx/html
     ports:
       - "80:80"
-      
+
   sharewise-api:
-    image: shaunmadziva/project-sharewise-api
+    image: shaunmadziva/project-sharewise-api:{{ image_tag }}
     ports:
       - "3000:3000"
     restart: always
@@ -18,7 +18,7 @@ services:
       - sharewise-network
 
   sharewise-db:
-    image: shaunmadziva/project-sharewise-db
+    image: shaunmadziva/project-sharewise-db:{{ image_tag }}
     ports:
       - "5432:5432"
     restart: always

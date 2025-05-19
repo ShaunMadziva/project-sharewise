@@ -21,8 +21,8 @@ pipeline {
         dir('ansible'){
         withCredentials([sshUserPrivateKey(credentialsId: 'ec2-key-pair', keyFileVariable: 'PRIVATE_KEY_FILE', usernameVariable: 'SSH_USER')]) {
         sh '''
-            ansible-playbook -i ansible_hosts playbooks/docker-install.yml --private-key $PRIVATE_KEY_FILE -u $SSH_USER
-            ansible-playbook -i ansible_hosts playbooks/docker-run.yml --private-key $PRIVATE_KEY_FILE -u $SSH_USER
+            ansible-playbook -i ansible_hosts playbooks/docker-install.yml --extra-vars 'image_tag=${BUILD_NUMBER}' --private-key $PRIVATE_KEY_FILE -u $SSH_USER
+            ansible-playbook -i ansible_hosts playbooks/docker-run.yml --extra-vars 'image_tag=${BUILD_NUMBER}' --private-key $PRIVATE_KEY_FILE -u $SSH_USER
         '''
          }
         }
