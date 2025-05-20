@@ -7,17 +7,19 @@ class Request {
     item_name,
     request_status,
     quantity,
+    fulfilled_quantity,
     request_date,
     school_name,
     school_address
   }) {
-    this.requestId = request_id;
-    this.schoolId = school_id;
-    this.itemName = item_name;
-    this.requestStatus = request_status;
-    this.quantity = quantity;
-    this.requestDate = request_date;
-    this.schoolName = school_name;
+    this.requestId = request_id
+    this.schoolId = school_id
+    this.itemName = item_name
+    this.requestStatus = request_status
+    this.quantity = quantity
+    this.fulfilledQuantity = fulfilled_quantity
+    this.requestDate = request_date
+    this.schoolName = school_name
     this.schoolAddress = school_address
   }
 
@@ -37,6 +39,34 @@ class Request {
       [schoolId]
     );
     return response.rows.map(row => new Request(row));
+  }
+
+  static async updateRequestFulfillment(client, requestId, addQuantity) {
+    const res = await db.query(
+      `SELECT quantity, fulfilled_quantity, school_id FROM request WHERE request_id = $1`,
+      [requestId]
+    );
+  
+    if (res.rows.length === 0) {
+      throw new Error("Request not found")
+    }
+  
+    const request = res.rows[0];
+    const newFulfilled = (request.fulfilled_quantity || 0) + addQuantity
+  
+    let newStatus = "pending"
+    if (newFulfilled >= request.quantity) {
+      newStatus = "fulfilled"
+    } else if (newFulfilled > 0) {
+      newStatus = "partially fulfilled"
+    }
+  
+    await db.query(
+      `UPDATE request SET fulfilled_quantity = $1, request_status = $2 WHERE request_id = $3`,
+      [newFulfilled, newStatus, requestId]
+    );
+  
+    return { schoolId: request.school_id, requestId, newStatus }
   }
   
 

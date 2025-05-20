@@ -30,6 +30,7 @@ CREATE TABLE request (
     item_name VARCHAR(255) NOT NULL,
     request_status VARCHAR(50) DEFAULT 'Pending',
     quantity INT DEFAULT 0,
+    fulfilled_quantity INT DEFAULT 0,
     request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (request_id),
     FOREIGN KEY (school_id) REFERENCES school(school_id) ON DELETE CASCADE
