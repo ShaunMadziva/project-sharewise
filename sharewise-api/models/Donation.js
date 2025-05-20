@@ -6,12 +6,14 @@ class Donation {
     donor_id,
     request_id,
     quantity,
+    item_name,
     item_description,
   }) {
     this.donationId = donation_id;
     this.donorId = donor_id;
     this.requestId = request_id;
     this.quantity = quantity;
+    this.itemName = item_name;
     this.description = item_description;
   }
 
@@ -54,7 +56,10 @@ class Donation {
 
   static async getByDonorId(donatorId) {
     const response = await db.query(
-      "SELECT * FROM donation WHERE donor_id = $1",
+      `SELECT d.*, r.item_name 
+       FROM donation d
+       JOIN request r ON d.request_id = r.request_id
+       WHERE d.donor_id = $1`,
       [donatorId]
     );
     if (response.rows.length === 0) {

@@ -1,4 +1,4 @@
-const aggregateRequestsData = (requestsData) => {
+export const aggregateRequestsData = (requestsData) => {
   const aggregated = {};
 
   requestsData.forEach((request) => {
@@ -20,24 +20,4 @@ const aggregateRequestsData = (requestsData) => {
   });
 
   return { x, y };
-};
-
-const aggregateStylesData = (styleSaleResults) => {
-  return styleSaleResults.reduce((acc, sale) => {
-    acc[sale.style] = (acc[sale.style] || 0) + sale.saleNumber;
-    return acc;
-  }, {});
-};
-
-const formatStylesData = (aggregatedData) => {
-  return {
-    styles: Object.keys(aggregatedData),
-    sales: Object.values(aggregatedData),
-  };
-};
-
-module.exports = {
-  aggregateRequestsData,
-  aggregateStylesData,
-  formatStylesData,
 };
