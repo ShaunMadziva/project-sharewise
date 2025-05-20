@@ -46,12 +46,11 @@ class Notification {
     if (response.rows.length === 0) {
         throw Error("No requests found");
       }
-      console.log("DB response", response.rows)
     return response.rows.map(r => new Notification(r))
   }
 
   static async markAsRead(notificationId) {
-    await db.query("UPDATE notification SET is_read = TRUE WHERE id = $1;", [notificationId])
+    await db.query("UPDATE notification SET is_read = TRUE WHERE notification_id = $1;", [notificationId])
   }
 }
 
