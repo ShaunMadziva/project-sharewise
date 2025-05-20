@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/donations", {
+      const response = await fetch("http://localhost:3000/fulfill-donation", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

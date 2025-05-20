@@ -25,7 +25,7 @@ class Request {
 
   static async getAll() {
     const response = await db.query(
-      "SELECT request.request_id, request.item_name, request.quantity, request.request_status, request.request_date, school.school_name, school.school_address FROM request JOIN school ON request.school_id = school.school_id;"
+      "SELECT request.request_id, request.item_name, request.quantity, request.fulfilled_quantity, request.request_status, request.request_date, school.school_name, school.school_address FROM request JOIN school ON request.school_id = school.school_id;"
     );
     if (response.rows.length === 0) {
       throw Error("No requests found");
@@ -41,7 +41,7 @@ class Request {
     return response.rows.map(row => new Request(row));
   }
 
-  static async updateRequestFulfillment(client, requestId, addQuantity) {
+  static async updateRequestFulfillment(requestId, addQuantity) {
     const res = await db.query(
       `SELECT quantity, fulfilled_quantity, school_id FROM request WHERE request_id = $1`,
       [requestId]
@@ -70,56 +70,37 @@ class Request {
   }
   
 
-  static async getBySchoolId(schoolId) {
-    const response = await db.query(
-      "SELECT request.request_id, request.school_id, request.item_name, request.request_status, request.quantity, request.request_date, school.school_name, school.school_address FROM request JOIN school ON request.school_id = school.school_id WHERE request.school_id = $1",
-      [schoolId]
-    );
-    return response.rows.map(row => new Request(row));
-  }  
-
   static async createRequest(schoolId, data) {
     const { itemName, quantity } = data;
 
-    const response = await db.query(
-      `INSERT INTO request (school_id, item_name, quantity)
-       VALUES ($1, $2, $3)
-       RETURNING *`,
-      [schoolId, itemName, quantity]
-    );
+    const response = await db.query("INSERT INTO request (school_id, item_name, quantity) VALUES ($1, $2, $3) RETURNING *", [schoolId, itemName, quantity])
 
     if (response.rows.length === 0) {
-      throw Error("Failed to create request");
+      throw Error("Failed to create request")
     }
 
-    return new Request(response.rows[0]);
+    return new Request(response.rows[0])
   }
 
   async deleteById(id) {
-    const response = await db.query(
-      "DELETE FROM request WHERE request_id = $1 RETURNING *",
-      [id]
-    );
+    const response = await db.query("DELETE FROM request WHERE request_id = $1 RETURNING *;", [id])
+
     if (response.rows.length === 0) {
-      throw Error("Request not found or already deleted");
+      throw Error("Request not found or already deleted")
     }
-    return new Request(response.rows[0]);
+    return new Request(response.rows[0])
   }
 
   async updateStatus(id, status) {
-    const response = await db.query(
-      `UPDATE request SET request_status = $1 WHERE request_id = $2 RETURNING *`,
-      [status, id]
-    );
+    const response = await db.query("UPDATE request SET request_status = $1 WHERE request_id = $2 RETURNING *;", [status, id])
 
     if (response.rows.length === 0) {
-      throw Error("Request not found or status not updated");
+      throw Error("Request not found or status not updated")
     }
 
-    return new Request(response.rows[0]);
+    return new Request(response.rows[0])
   }
 }
 
-module.exports = {
-  Request,
-};
+module.exports = Request
+
