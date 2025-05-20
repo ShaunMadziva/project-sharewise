@@ -2,6 +2,7 @@ const notificationBtn = document.getElementById("notification-btn")
 const contact = document.querySelector(".contact-form");
 const body = document.querySelector("body")
 const closeBtn = document.querySelector(".close");
+const badge = document.getElementById('notification-count');
 
 notificationBtn.addEventListener("click", function(){
   contact.style.transition = "transform 0.4s ease-in-out";
@@ -11,6 +12,7 @@ notificationBtn.addEventListener("click", function(){
 closeBtn.addEventListener("click", function(){
   contact.style.transition = "transform 0.4s ease-in-out";
   contact.style.display="none";
+  badge.style.display = "none"
 });
 
 
@@ -61,6 +63,17 @@ async function fetchAndRenderNotifications() {
 function renderNotifications(notifications) {
   const tbody = document.getElementById('notifications-table-body');
   tbody.innerHTML = '';
+
+  const updates = notifications.filter(n =>
+    n.requestStatus === "fulfilled" || n.requestStatus === "partly fulfilled"
+  );
+
+  if (updates.length > 0) {
+    badge.style.display = "inline-block";
+    badge.textContent = updates.length;
+  } else {
+    badge.style.display = "none";
+  }
 
   notifications.forEach(notification => {
     const tr = document.createElement('tr');
