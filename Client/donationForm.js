@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         requestItem.innerHTML = `
           <h5>${request.itemName} (Requested: ${request.quantity})</h5>
-          <p>Requested by: <strong>School ID: ${request.schoolId}</strong></p>
+          <p>Requested by: <strong>School ID: ${request.schoolName}</strong></p>
           <div class="d-flex justify-content-between align-items-center">
             <input type="number" class="form-control me-2" placeholder="Qty to donate" min="1" max="${request.quantity}" />
             <input type="text" class="form-control me-2" placeholder="Item description" />
