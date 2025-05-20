@@ -110,3 +110,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   fetchRequests();
 });
+
+// Logout functionality
+document.getElementById("logout-link").addEventListener("click", function (e) {
+  e.preventDefault();
+  localStorage.clear();
+  sessionStorage.clear();
+  console.log("User logged out.");
+
+  // Redirect to login page (or homepage)
+  window.location.href = "registerfinal.html"; 
+});

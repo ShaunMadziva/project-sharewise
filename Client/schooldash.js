@@ -73,3 +73,14 @@ async function fetchAndRenderRequests() {
   
   // Call on page load
   window.addEventListener('DOMContentLoaded', fetchAndRenderRequests);
+  // Logout functionality
+  document.getElementById("logout-link").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    // Clear local storage/session storage 
+    localStorage.clear();
+    sessionStorage.clear();
+    console.log("User logged out.");
+
+    window.location.href = "registerfinal.html";
+  });
