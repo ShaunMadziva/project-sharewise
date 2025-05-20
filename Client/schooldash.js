@@ -1,3 +1,19 @@
+const notificationBtn = document.getElementById("notification-btn")
+const contact = document.querySelector(".contact-form");
+const body = document.querySelector("body")
+const closeBtn = document.querySelector(".close");
+
+notificationBtn.addEventListener("click", function(){
+  contact.style.transition = "transform 0.4s ease-in-out";
+  contact.style.display = "flex";
+});
+
+closeBtn.addEventListener("click", function(){
+  contact.style.transition = "transform 0.4s ease-in-out";
+  contact.style.display="none";
+});
+
+
 document.addEventListener("DOMContentLoaded", () => {
   const name = localStorage.getItem("school_name");
   const email = localStorage.getItem("email");
@@ -9,6 +25,82 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("school-address").textContent = address;
 });
 
+
+async function fetchAndRenderNotifications() {
+
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+      console.error("No token found in localStorage");
+      return;
+  }
+
+  try {
+      const tokenParts = token.split('.');
+      const payload = JSON.parse(atob(tokenParts[1]));
+      const schoolId = payload.school_id;
+
+      localStorage.setItem("school_id", schoolId);
+      console.log("School ID from token:", schoolId);
+    const response = await fetch(`http://localhost:3000/fulfill-donation/${schoolId}`,{
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    if (!response.ok) {
+      throw new Error('Failed to fetch requests');
+    }
+    const data = await response.json();
+    console.log("Fetched", data)
+    renderNotifications(data);
+  } catch (error) {
+    console.error('Error loading requests:', error);
+  }
+}
+
+function renderNotifications(notifications) {
+  const tbody = document.getElementById('notifications-table-body');
+  tbody.innerHTML = '';
+
+  notifications.forEach(notification => {
+    const tr = document.createElement('tr');
+
+    const tdRequestId = document.createElement('td');
+    tdRequestId.textContent = notification.requestId
+
+    const tdItem = document.createElement('td');
+    tdItem.textContent = notification.itemName;
+
+    const tdQuantity = document.createElement('td');
+    tdQuantity.textContent = notification.quantity;
+
+    const tdStatus = document.createElement('td');
+    tdStatus.textContent = notification.requestStatus;
+
+    const tdCreatedAt = document.createElement('td');
+    tdCreatedAt.textContent = new Date(notification.createdAt).toLocaleString();
+
+    const tdDonorName = document.createElement('td');
+    tdDonorName.textContent = notification.donorName || "Anonymous";
+
+    const tdActions = document.createElement('td');
+    tdActions.innerHTML = `
+      <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>Mark as Read</button>
+    `;
+
+    tr.appendChild(tdRequestId)
+    tr.appendChild(tdItem)
+    tr.appendChild(tdQuantity)
+    tr.appendChild(tdStatus)
+    tr.appendChild(tdCreatedAt)
+    tr.appendChild(tdDonorName)
+    tr.appendChild(tdActions)
+
+    tbody.appendChild(tr);
+  });
+}
+
+fetchAndRenderNotifications()
 
 
 async function fetchAndRenderRequests() {
@@ -32,7 +124,6 @@ async function fetchAndRenderRequests() {
         throw new Error('Failed to fetch requests');
       }
       const data = await response.json();
-      console.log("Fetched", data)
       renderRequests(data.requests);
     } catch (error) {
       console.error('Error loading requests:', error);
@@ -54,22 +145,28 @@ async function fetchAndRenderRequests() {
   
       const tdQuantity = document.createElement('td');
       tdQuantity.textContent = request.quantity;
+
+      const tdStatus = document.createElement('td');
+      tdStatus.textContent = request.requestStatus;
+
+      const tdDate = document.createElement('td');
+      tdDate.textContent = request.requestDate;
   
       const tdActions = document.createElement('td');
       tdActions.innerHTML = `
-        <button class="btn btn-sm btn-info me-1"><i class="fas fa-eye"></i> View</button>
-        <button class="btn btn-sm btn-warning me-1"><i class="fas fa-edit"></i> Edit</button>
         <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
       `;
   
       tr.appendChild(tdName);
       tr.appendChild(tdItem);
       tr.appendChild(tdQuantity);
+      tr.appendChild(tdStatus)
+      tr.appendChild(tdDate)
       tr.appendChild(tdActions);
   
       tbody.appendChild(tr);
     });
   }
   
-  // Call on page load
+  
   window.addEventListener('DOMContentLoaded', fetchAndRenderRequests);
