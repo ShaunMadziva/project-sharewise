@@ -3,9 +3,7 @@ const Notification = require('../models/Notification');
 const getSchoolNotifications = async (req, res) => {
   try {
     const schoolId = req.user.school_id
-    console.log("The school id", schoolId)
     const notifications = await Notification.getNotificationsForSchool(schoolId)
-    console.log("passes to notification")
     res.json(notifications);
   } catch (err) {
     console.error("Error fetching notifications:", err);
