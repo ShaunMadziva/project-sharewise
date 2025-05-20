@@ -83,11 +83,11 @@
 
   <!-- Sidebar -->
   <div class="sidebar">
-    <a href="#"><i class="fas fa-home"></i> Home</a>
-    <a href="#"><i class="fas fa-calendar-alt"></i> Events</a>
-    <a href="#"><i class="fas fa-school"></i> School Dashboard</a>
-    <a href="#"><i class="fas fa-envelope"></i> Contact Us</a>
-    <a href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+    <a href="index2.html"><i class="fas fa-home"></i> Home</a>
+    <a href="index2.html"><i class="fas fa-calendar-alt"></i> Events</a>
+    <a href="schooldash.html"><i class="fas fa-school"></i> School Dashboard</a>
+    <a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
+    <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i> Log Out</a>
   </div>
 
   <!-- Main Form Content -->
@@ -118,37 +118,6 @@
       <button type="submit" class="custom-submit-btn">Submit Request</button>
     </form>
   </div>
-
-  <!-- <script>
-    document.getElementById('requestForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-
-      const requestData = {
-        item: document.getElementById('itemType').value,
-        quantity: document.getElementById('quantity').value
-      };
-
-      try {
-        const response = await fetch('https://your-api-url.com/requests', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            // 'Authorization': 'Bearer your-token-if-needed'
-          },
-          body: JSON.stringify(requestData)
-        });
-
-        if (!response.ok) throw new Error('Network error');
-        const result = await response.json();
-
-        alert('Request submitted successfully!');
-        this.reset();
-      } catch (err) {
-        console.error(err);
-        alert('Error submitting request');
-      }
-    });
-  </script> -->
 
 </body>
 </html>
