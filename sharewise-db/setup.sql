@@ -30,6 +30,7 @@ CREATE TABLE request (
     item_name VARCHAR(255) NOT NULL,
     request_status VARCHAR(50) DEFAULT 'Pending',
     quantity INT DEFAULT 0,
+    fulfilled_quantity INT DEFAULT 0,
     request_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (request_id),
     FOREIGN KEY (school_id) REFERENCES school(school_id) ON DELETE CASCADE
@@ -90,4 +91,21 @@ INSERT INTO donation (donor_id, request_id, quantity, item_description) VALUES
 (3, 1, 40, 'used'),
 (4, 5, 25, 'good'),
 (5, 4, 90, 'new');
+
+CREATE TABLE notification (
+    notification_id INT GENERATED ALWAYS AS IDENTITY,
+    school_id INT NOT NULL,
+    request_id INT NOT NULL,
+    message VARCHAR(255),
+    is_read  BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    PRIMARY KEY (notification_id),
+    FOREIGN KEY (school_id) REFERENCES school(school_id) ON DELETE CASCADE,
+    FOREIGN KEY (request_id) REFERENCES request(request_id) ON DELETE CASCADE
+);
+
+INSERT INTO notification (school_id, request_id, message) VALUES
+(1, 4, 'Fulfilled'),
+(2, 5, 'Partly fullfilled'),
+(4, 6, 'Fulfilled');
 
