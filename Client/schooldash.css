@@ -1,72 +1,130 @@
-
 .contact-form {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;     
-    height: 100vh; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
 }
 
-.notifications{
-    color: black;
-    z-index: 1001;
+.notifications {
+  color: black;
+  z-index: 1001;
 }
 
 #notification-btn {
-    position: relative;
-  }
+  position: relative;
+}
 
 #notification-count {
-    position: absolute;
-    width: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 50%;
-    display: none;
-    align-items: center;
-    justify-content: center;
-  }
+  position: absolute;
+  width: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
 
 .contact-form .close {
-    position: absolute;
-    top: 2rem;
-    right: 3rem;
-    width: 30px;
-    height: 30px;
-    background-color: blue;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    z-index: 1001;
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  width: 30px;
+  height: 30px;
+  background-color: blue;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 1001;
 }
 
 .contact-form .close:hover {
-    background-color: red;
-    transition: background-color 0.3s ease;
+  background-color: red;
+  transition: background-color 0.3s ease;
 }
 
 .contact-form .close::before,
 .contact-form .close::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 16px;
-    height: 2px;
-    background-color: white;
-    transform-origin: center;
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 2px;
+  background-color: white;
+  transform-origin: center;
 }
 
 .contact-form .close::before {
-    transform: translate(-50%, -50%) rotate(45deg);
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .contact-form .close::after {
-    transform: translate(-50%, -50%) rotate(-45deg);
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url("background_dashboard.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.sidebar {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding-top: 30px;
+  color: white;
+}
+
+.sidebar a {
+  padding: 15px 20px;
+  text-decoration: none;
+  font-size: 18px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar i {
+  margin-right: 10px;
+}
+
+.main-content {
+  margin-left: 220px;
+  padding: 40px 20px;
+  color: white;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(5px);
+}
+
+.btn-primary {
+  background-color: #b9b995;
+  border: none;
+  color: #333;
+  font-weight: bold;
+}
+
+.btn-primary:hover {
+  background-color: #a5a57d;
 }
