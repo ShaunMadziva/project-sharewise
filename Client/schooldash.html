@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School Dashboard</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script type="module" defer src="schooldash.js"></script>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url("background_dashboard.jpg") no-repeat center center
+          fixed;
+        background-size: cover;
+        color: white;
+      }
+
+      .sidebar {
+        height: 100%;
+        width: 200px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        padding-top: 30px;
+      }
+
+      .sidebar a {
+        padding: 15px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        color: white;
+        display: block;
+        transition: 0.3s;
+      }
+
+      .sidebar a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .sidebar i {
+        margin-right: 10px;
+      }
+
+      .main-content {
+        margin-left: 220px;
+        padding: 40px 20px;
+      }
+
+      .card {
+        background-color: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(8px);
+        color: black;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .btn {
+        border-radius: 8px;
+      }
+      .btn-primary {
+        background-color: #b9b995;
+        border: none;
+        color: #333;
+        font-weight: bold;
+      }
+
+      .btn-primary:hover {
+        background-color: #a5a57d;
+      }
+
+      .table th,
+      .table td {
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <a href="index2.html"><i class="fas fa-home"></i> Home</a>
+      <a href="index2.html"><i class="fas fa-calendar-alt"></i> Events</a>
+      <a href="requestform.html"
+        ><i class="fas fa-hand-holding-heart"></i> Make a Request</a
+      >
+      <a href="#"><i class="fas fa-chart-bar"></i> Statistics</a>
+      <a href="contact.html"><i class="fas fa-envelope"></i> Contact Us</a>
+      <a href="#" id="logout-link"
+        ><i class="fas fa-sign-out-alt"></i> Log Out</a
+      >
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="container-fluid">
+        <div class="row mb-4 align-items-center">
+          <div class="col-md-8">
+            <h2 class="mt-4">
+              Welcome, <span id="school-name">School Name</span>
+            </h2>
+            <p>
+              Email: <span id="school-email">school_email@example.com</span>
+            </p>
+            <p>
+              Address:
+              <span id="school-address">123 Main St, City, State ZIP</span>
+            </p>
+          </div>
+          <div class="col-md-4 text-end">
+            <a href="requestform.html" class="btn btn-primary"
+              >Make a Request</a
+            >
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="card shadow-sm">
+              <div class="card-header">Number of items you requested</div>
+              <div class="card-body">
+                <div id="barChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3>Recent Requests</h3>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="requests-table-body">
+                  <tr>
+                    <td>School A</td>
+                    <td>Desks</td>
+                    <td>25</td>
+                    <td>
+                      <button class="btn btn-sm btn-info me-1">
+                        <i class="fas fa-eye"></i> View
+                      </button>
+                      <button class="btn btn-sm btn-warning me-1">
+                        <i class="fas fa-edit"></i> Edit
+                      </button>
+                      <button class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete
+                      </button>
+                    </td>
+                  </tr>
+                  <!-- More rows dynamically if needed -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

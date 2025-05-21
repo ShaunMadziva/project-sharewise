@@ -47,7 +47,11 @@ async function schoollogin (req, res) {
                     throw new Error("Error in token generation")
                 } res.status(200).json ({ 
                     success: true,
-                    token: token
+                    token: token,
+                    school_id: user.school_id,
+                    school_name: user.school_name,
+                    email: user.email,
+                    school_address: user.school_address
                 })
             }
             jwt.sign(payload, process.env.SECRET_TOKEN, { expiresIn: 3600 }, sendToken)
@@ -57,7 +61,7 @@ async function schoollogin (req, res) {
     } catch(err){
         res.status(401).json({ error: err.message })
     }
-    res.status(200).send(data);
+    // res.status(200).send(data);
 }
 
 async function donorlogin (req, res) {
@@ -79,7 +83,11 @@ async function donorlogin (req, res) {
                     throw new Error("Error in token generation")
                 } res.status(200).json ({ 
                     success: true,
-                    token: token
+                    token: token,
+                    donor_id: user.donor_id,
+                    donor_name: user.donor_name,
+                    email: user.email,
+                    donor_address: user.donor_address
                 })
             }
             jwt.sign(payload, process.env.SECRET_TOKEN, { expiresIn: 3600 }, sendToken)
@@ -89,7 +97,7 @@ async function donorlogin (req, res) {
     } catch(err){
         res.status(401).json({ error: err.message })
     }
-    res.status(200).send(data);
+    // res.status(200).send(data);
 }
 
 

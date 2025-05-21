@@ -2,12 +2,7 @@ const { Donation } = require("../models/Donation");
 
 const createDonation = async (req, res) => {
   try {
-    const data = {
-      donorId: req.body.donorId,
-      requestId: req.body.requestId,
-      quantity: req.body.quantity,
-      description: req.body.description,
-    };
+    const data = req.body;
 
     const newDonation = await Donation.createDonation(data);
 
