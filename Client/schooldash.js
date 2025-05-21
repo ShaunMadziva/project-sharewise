@@ -99,18 +99,24 @@ function renderNotifications(notifications) {
           }
         });
 
-        markReadBtn.textContent = 'Read';
-        markReadBtn.disabled = true; //
-        // Update badge count
-        const currentCount = parseInt(badge.textContent);
-        const newCount = currentCount - 1;
-        badge.textContent = newCount;
+        markReadBtn.textContent = 'Read'
+        markReadBtn.disabled = true
+      
+        const currentCount = parseInt(badge.textContent)
+        const newCount = currentCount - 1
+        if (newCount > 0) {
+          badge.textContent = newCount;
+        } else {
+          badge.style.display = "none";
+        }
 
       if (newCount === 0) {
         badge.style.display = "none";}
       } catch (err) {
         console.error('Failed to mark as read:', err);
       }
+
+      fetchAndRenderNotifications();
     });
 
     deleteBtn.addEventListener("click", async () => {
@@ -123,6 +129,16 @@ function renderNotifications(notifications) {
         });
 
       tr.remove()
+
+      const currentCount = parseInt(badge.textContent);
+      if (!notification.isRead && currentCount > 0) {
+        const newCount = currentCount - 1;
+        if (newCount > 0) {
+          badge.textContent = newCount;
+        } else {
+          badge.style.display = "none";
+        }
+      }
       } catch (err) {
         console.error('Failed to mark as read:', err);
       }
@@ -228,3 +244,4 @@ async function fetchAndRenderRequests() {
   
   
   window.addEventListener('DOMContentLoaded', fetchAndRenderRequests);
+  window.addEventListener('DOMContentLoaded', fetchAndRenderNotifications);
