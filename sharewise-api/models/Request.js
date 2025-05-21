@@ -35,7 +35,7 @@ class Request {
 
   static async getBySchoolId(schoolId) {
     const response = await db.query(
-      "SELECT request.request_id, request.school_id, request.item_name, request.request_status, request.quantity, request.request_date, school.school_name, school.school_address FROM request JOIN school ON request.school_id = school.school_id WHERE request.school_id = $1",
+      "SELECT request.request_id, request.school_id, request.item_name, request.fulfilled_quantity, request.request_status, request.quantity, request.request_date, school.school_name, school.school_address FROM request JOIN school ON request.school_id = school.school_id WHERE request.school_id = $1",
       [schoolId]
     );
     return response.rows.map(row => new Request(row));
@@ -82,7 +82,7 @@ class Request {
     return new Request(response.rows[0])
   }
 
-  async deleteById(id) {
+  static async deleteById(id) {
     const response = await db.query("DELETE FROM request WHERE request_id = $1 RETURNING *;", [id])
 
     if (response.rows.length === 0) {

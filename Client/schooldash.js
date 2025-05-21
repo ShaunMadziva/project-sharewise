@@ -61,11 +61,12 @@ async function fetchAndRenderNotifications() {
 }
 
 function renderNotifications(notifications) {
+  const token = localStorage.getItem("token");
   const tbody = document.getElementById('notifications-table-body');
   tbody.innerHTML = '';
 
   const updates = notifications.filter(n =>
-    n.requestStatus === "fulfilled" || n.requestStatus === "partly fulfilled"
+   (n.requestStatus === "fulfilled" || n.requestStatus === "partly fulfilled") && !n.isRead
   );
 
   if (updates.length > 0) {
@@ -74,39 +75,61 @@ function renderNotifications(notifications) {
   } else {
     badge.style.display = "none";
   }
-
+  console.log("Notification structure:", notifications[0]);
   notifications.forEach(notification => {
     const tr = document.createElement('tr');
 
-    const tdRequestId = document.createElement('td');
-    tdRequestId.textContent = notification.requestId
-
-    const tdItem = document.createElement('td');
-    tdItem.textContent = notification.itemName;
-
-    const tdQuantity = document.createElement('td');
-    tdQuantity.textContent = notification.quantity;
-
-    const tdStatus = document.createElement('td');
-    tdStatus.textContent = notification.requestStatus;
-
-    const tdCreatedAt = document.createElement('td');
-    tdCreatedAt.textContent = new Date(notification.createdAt).toLocaleString();
-
-    const tdDonorName = document.createElement('td');
-    tdDonorName.textContent = notification.donorName || "Anonymous";
-
+    const tdMessageBox = document.createElement('td');
+    tdMessageBox.textContent = `The request with ID ${notification.requestId} (${notification.itemName}) has been ${notification.requestStatus} by ${notification.donorName || "Anonymous"} at ${new Date(notification.createdAt).toLocaleString()}`
+    
     const tdActions = document.createElement('td');
     tdActions.innerHTML = `
-      <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i>Mark as Read</button>
+      <button class="btn btn-sm btn-danger mark-read"><i class="fas fa-trash-alt"></i>Mark as Read</button>
+      <button class="btn btn-sm btn-danger delete"><i class="fas fa-trash-alt"></i>Delete</button>
     `;
 
-    tr.appendChild(tdRequestId)
-    tr.appendChild(tdItem)
-    tr.appendChild(tdQuantity)
-    tr.appendChild(tdStatus)
-    tr.appendChild(tdCreatedAt)
-    tr.appendChild(tdDonorName)
+    const markReadBtn = tdActions.querySelector('.mark-read');
+    const deleteBtn = tdActions.querySelector('.delete');
+    markReadBtn.addEventListener('click', async () => {
+      try {
+        await fetch(`http://localhost:3000/fulfill-donation/${notification.id}/read`, {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        markReadBtn.textContent = 'Read';
+        markReadBtn.disabled = true; //
+        // Update badge count
+        const currentCount = parseInt(badge.textContent);
+        const newCount = currentCount - 1;
+        badge.textContent = newCount;
+
+      if (newCount === 0) {
+        badge.style.display = "none";}
+      } catch (err) {
+        console.error('Failed to mark as read:', err);
+      }
+    });
+
+    deleteBtn.addEventListener("click", async () => {
+      try {
+        await fetch(`http://localhost:3000/fulfill-donation/${notification.id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+      tr.remove()
+      } catch (err) {
+        console.error('Failed to mark as read:', err);
+      }
+        
+    })
+
+    tr.appendChild(tdMessageBox)
     tr.appendChild(tdActions)
 
     tbody.appendChild(tr);
@@ -132,7 +155,7 @@ async function fetchAndRenderRequests() {
 
         localStorage.setItem("school_id", schoolId);
         console.log("School ID from token:", schoolId);
-      const response = await fetch(`http://localhost:3000/requests/school/${schoolId}`); // Your API endpoint here
+      const response = await fetch(`http://localhost:3000/requests/school/${schoolId}`);
       if (!response.ok) {
         throw new Error('Failed to fetch requests');
       }
@@ -144,6 +167,7 @@ async function fetchAndRenderRequests() {
   }
 
   function renderRequests(requests) {
+    const token = localStorage.getItem("token");
     const tbody = document.getElementById('requests-table-body');
     tbody.innerHTML = '';
   
@@ -159,6 +183,9 @@ async function fetchAndRenderRequests() {
       const tdQuantity = document.createElement('td');
       tdQuantity.textContent = request.quantity;
 
+      const tdFulfilledQuantity = document.createElement('td');
+      tdFulfilledQuantity.textContent = request.fulfilledQuantity;
+
       const tdStatus = document.createElement('td');
       tdStatus.textContent = request.requestStatus;
 
@@ -167,12 +194,30 @@ async function fetchAndRenderRequests() {
   
       const tdActions = document.createElement('td');
       tdActions.innerHTML = `
-        <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+        <button class="btn btn-sm btn-danger delete-request-btn"><i class="fas fa-trash-alt"></i> Delete</button>
       `;
+
+      const deleteBtn = tdActions.querySelector('.delete-request-btn');
+      deleteBtn.addEventListener("click", async () => {
+        try {
+          await fetch(`http://localhost:3000/requests/${request.requestId}`, {
+            method: 'DELETE',
+            headers: {
+              "Content-Type": "application/json"
+            }
+          });
+  
+        tr.remove()
+        } catch (err) {
+          console.error('Failed to mark as read:', err);
+        }
+          
+      })
   
       tr.appendChild(tdName);
       tr.appendChild(tdItem);
       tr.appendChild(tdQuantity);
+      tr.appendChild(tdFulfilledQuantity)
       tr.appendChild(tdStatus)
       tr.appendChild(tdDate)
       tr.appendChild(tdActions);

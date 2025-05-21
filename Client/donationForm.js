@@ -21,14 +21,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("Rendering requests:", requests);
     donationList.innerHTML = "";
     requests
-      .filter((request) => request.requestStatus === "Pending")
+      .filter((request) => request.requestStatus === "Pending" || request.requestStatus === "partially fulfilled")
       .forEach((request) => {
         const requestItem = document.createElement("div");
         requestItem.classList.add("donation-item");
 
         requestItem.innerHTML = `
-          <h5>${request.itemName} (Requested: ${request.quantity})</h5>
-          <p>Requested by: <strong>School ID: ${request.schoolName}</strong></p>
+          <h5>${request.itemName} (Requested: ${request.quantity} Fulfilled: ${request.fulfilledQuantity})</h5>
+          <p>Requested by: <strong>School Name:</strong> ${request.schoolName} <strong>Adress:</strong> ${request.schoolAddress}</p>
           <div class="d-flex justify-content-between align-items-center">
             <input type="number" class="form-control me-2" placeholder="Qty to donate" min="1" max="${request.quantity}" />
             <input type="text" class="form-control me-2" placeholder="Item description" />

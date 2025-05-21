@@ -43,14 +43,23 @@ class Notification {
         LEFT JOIN donor ON donor.donor_id = d.donor_id
         WHERE n.school_id = $1
         ORDER BY n.created_at DESC;`, [schoolId])
-    if (response.rows.length === 0) {
-        throw Error("No requests found");
-      }
+    // if (response.rows.length === 0) {
+    //     throw Error("No requests found");
+    //   }
     return response.rows.map(r => new Notification(r))
   }
 
   static async markAsRead(notificationId) {
     await db.query("UPDATE notification SET is_read = TRUE WHERE notification_id = $1;", [notificationId])
+  }
+
+  static async deleteById(id){
+    const response = await db.query("DELETE FROM notification where notification_id = $1 RETURNING *;", [id])
+
+    if (response.rows.length === 0) {
+      throw Error("Notification not found or already deleted")
+    }
+    return new Notification(response.rows[0])
   }
 }
 
