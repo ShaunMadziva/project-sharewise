@@ -14,7 +14,6 @@ notificationBtn.addEventListener("click", function () {
 closeBtn.addEventListener("click", function () {
   contact.style.transition = "transform 0.4s ease-in-out";
   contact.style.display = "none";
-  badge.style.display = "none";
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -70,7 +69,7 @@ function renderNotifications(notifications) {
   const updates = notifications.filter(
     (n) =>
       (n.requestStatus === "fulfilled" ||
-        n.requestStatus === "partly fulfilled") &&
+        n.requestStatus === "partially fulfilled") &&
       !n.isRead
   );
 
@@ -99,36 +98,46 @@ function renderNotifications(notifications) {
 
     const markReadBtn = tdActions.querySelector(".mark-read");
     const deleteBtn = tdActions.querySelector(".delete");
-    markReadBtn.addEventListener("click", async () => {
-      try {
-        await fetch(
-          `http://localhost:3000/fulfill-donation/${notification.id}/read`,
-          {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+    if (notification.isRead) {
+      markReadBtn.textContent = 'Read';
+      markReadBtn.disabled = true;
+      markReadBtn.classList.add('btn-secondary');
+      tr.classList.add('text-muted'); // optional grey-out
+    } else {
+      markReadBtn.textContent = 'Mark as Read';
+      markReadBtn.classList.add('btn-danger');
+      markReadBtn.addEventListener('click', async () => {
+        try {
+          const notificationResponse = await fetch(`http://localhost:3000/fulfill-donation/${notification.id}/read`, {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+  
+          if (!notificationResponse.ok) {
+            throw new Error('Failed to mark as read');
           }
-        );
-
-        markReadBtn.textContent = "Read";
-        markReadBtn.disabled = true; //
-        // Update badge count
-        const currentCount = parseInt(badge.textContent);
-        const newCount = currentCount - 1;
-        badge.textContent = newCount;
-
-        if (newCount === 0) {
-          badge.style.display = "none";
+          markReadBtn.textContent = 'Read';
+          markReadBtn.disabled = true;
+          markReadBtn.classList.remove('btn-danger');
+          markReadBtn.classList.add('btn-secondary');
+          tr.classList.add('text-muted');
+  
+          // Update badge count
+          const currentCount = parseInt(badge.textContent);
+          const newCount = currentCount - 1;
+          if (newCount > 0) {
+            badge.textContent = newCount;
+          } else {
+            badge.style.display = 'none';
+          }
+        } catch (err) {
+          console.error('Failed to mark as read:', err);
         }
-      } catch (err) {
-        console.error("Failed to mark as read:", err);
-      }
-    });
+      })};
 
     deleteBtn.addEventListener("click", async () => {
       try {
-        await fetch(
+        const deleteResponse = await fetch(
           `http://localhost:3000/fulfill-donation/${notification.id}`,
           {
             method: "DELETE",
@@ -137,6 +146,9 @@ function renderNotifications(notifications) {
             },
           }
         );
+        if (!deleteResponse.ok) {
+          throw new Error('Failed to mark as read');
+        }
 
         tr.remove();
       } catch (err) {
@@ -151,7 +163,6 @@ function renderNotifications(notifications) {
   });
 }
 
-fetchAndRenderNotifications();
 
 async function fetchAndRenderRequests() {
   const token = localStorage.getItem("token");
@@ -240,9 +251,6 @@ function renderRequests(requests) {
   requests.forEach((request) => {
     const tr = document.createElement("tr");
 
-    const tdName = document.createElement("td");
-    tdName.textContent = request.schoolName || "Unknown";
-
     const tdItem = document.createElement("td");
     tdItem.textContent = request.itemName;
 
@@ -279,7 +287,6 @@ function renderRequests(requests) {
       }
     });
 
-    tr.appendChild(tdName);
     tr.appendChild(tdItem);
     tr.appendChild(tdQuantity);
     tr.appendChild(tdFulfilledQuantity);
@@ -291,4 +298,5 @@ function renderRequests(requests) {
   });
 }
 
+window.addEventListener("DOMContentLoaded", fetchAndRenderNotifications)
 window.addEventListener("DOMContentLoaded", fetchAndRenderRequests);
