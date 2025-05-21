@@ -100,6 +100,27 @@
       <a href="./loginfinal.html" class="btn btn-outline-light btn-lg mt-3">Login</a>
     </div>
   </div>
+  <!-- About Us + Impact Section -->
+<section class="py-5 bg-light" id="about-impact">
+  <div class="container">
+    <h2 class="text-center mb-4">About Us & Our Impact</h2>
+    <div class="row">
+      <div class="col-md-6">
+        <p>
+          At <strong>ShareWise</strong>, our mission is to reduce electronic waste by connecting companies with surplus tech to schools in need. 
+          Every donated laptop, tablet, or desktop not only extends the device’s lifecycle but also supports digital education for underserved communities.
+        </p>
+        <p>
+          Together, we’re building a sustainable future—one device at a time.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <!-- Plotly Chart will go here -->
+        <div id="impactChart"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
   <!-- Footer -->
   <footer class="footer text-center">
@@ -114,5 +135,27 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Plotly JS -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+  const data = [{
+    x: ['2021', '2022', '2023', '2024'],
+    y: [500, 1200, 2400, 4300],  // Replace with real kg saved
+    type: 'bar',
+    marker: {
+      color: '#2d8659'
+    }
+  }];
+
+  const layout = {
+    title: 'Electronic Waste Saved (kg)',
+    xaxis: { title: 'Year' },
+    yaxis: { title: 'E-Waste Saved (kg)' },
+    responsive: true
+  };
+
+  Plotly.newPlot('impactChart', data, layout);
+</script>
+
 </body>
 </html>

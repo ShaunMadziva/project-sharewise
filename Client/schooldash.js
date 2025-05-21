@@ -156,18 +156,17 @@ fetchAndRenderNotifications()
 
 
 async function fetchAndRenderRequests() {
+  const token = localStorage.getItem("token");
 
-    const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found in localStorage");
+    return;
+  }
 
-    if (!token) {
-        console.error("No token found in localStorage");
-        return;
-    }
-
-    try {
-        const tokenParts = token.split('.');
-        const payload = JSON.parse(atob(tokenParts[1]));
-        const schoolId = payload.school_id;
+  try {
+    const tokenParts = token.split(".");
+    const payload = JSON.parse(atob(tokenParts[1]));
+    const schoolId = payload.school_id;
 
         localStorage.setItem("school_id", schoolId);
         console.log("School ID from token:", schoolId);
