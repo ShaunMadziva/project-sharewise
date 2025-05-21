@@ -104,6 +104,4 @@ class Donation {
   }
 }
 
-module.exports = {
-  Donation,
-};
+module.exports = Donation
