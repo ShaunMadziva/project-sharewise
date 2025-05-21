@@ -1,0 +1,72 @@
+
+.contact-form {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;     
+    height: 100vh; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.notifications{
+    color: black;
+    z-index: 1001;
+}
+
+#notification-btn {
+    position: relative;
+  }
+
+#notification-count {
+    position: absolute;
+    width: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+.contact-form .close {
+    position: absolute;
+    top: 2rem;
+    right: 3rem;
+    width: 30px;
+    height: 30px;
+    background-color: blue;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.contact-form .close:hover {
+    background-color: red;
+    transition: background-color 0.3s ease;
+}
+
+.contact-form .close::before,
+.contact-form .close::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 2px;
+    background-color: white;
+    transform-origin: center;
+}
+
+.contact-form .close::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.contact-form .close::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}

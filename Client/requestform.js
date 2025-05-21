@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const token = localStorage.getItem('token');
 
       try {
-        const response = await fetch("http://localhost:3000/requests/", {
+        const response = await fetch("http://localhost:3000/requests", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
