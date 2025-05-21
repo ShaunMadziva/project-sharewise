@@ -203,7 +203,7 @@ function renderVisualization(x, y) {
       labels: x,
       datasets: [
         {
-          label: "Quantity Donated",
+          label: "Quantity Requested",
           data: y,
           backgroundColor: "rgba(75, 192, 192, 0.6)",
           borderColor: "rgba(75, 192, 192, 1)",
