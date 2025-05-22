@@ -52,5 +52,5 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log("User logged out.");
 
     // Redirect to login page (or homepage)
-    window.location.href = "registerfinal.html"; 
+    window.location.href = "loginfinal.html"; 
   });

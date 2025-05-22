@@ -121,8 +121,6 @@ function renderDonations(donations) {
 
     const tdActions = document.createElement("td");
     tdActions.innerHTML = `
-        <button class="btn btn-sm btn-info me-1"><i class="fas fa-eye"></i> View</button>
-        <button class="btn btn-sm btn-warning me-1"><i class="fas fa-edit"></i> Edit</button>
         <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
       `;
 
@@ -150,5 +148,5 @@ document.getElementById("logout-link").addEventListener("click", function (e) {
   console.log("User logged out.");
 
   // Redirect to login page (or homepage)
-  window.location.href = "registerfinal.html";
+  window.location.href = "loginfinal.html";
 });
