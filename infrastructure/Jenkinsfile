@@ -1,0 +1,76 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Terraform init') {
+            steps {
+                script {
+                    sh '''
+                        #!/bin/bash
+                        cd infrastructure
+                        echo "Initializing terraform"
+                        terraform init
+                    '''
+                }
+            }
+        }
+
+        stage('Terraform apply') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws-secret-access-key-id', variable: 'AWS_SECRET_ACCESS_KEY')
+                ]) {
+                    script {
+                        sh '''
+                            #!/bin/bash
+                            cd infrastructure
+                            echo "Provisioning infrastructure"
+                            terraform apply -auto-approve
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Terraform set up SSH') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws-secret-access-key-id', variable: 'AWS_SECRET_ACCESS_KEY')
+                ]) {
+                    script {
+                        sh '''
+                            #!/bin/bash
+                            cd infrastructure
+                            echo "Output pem file"
+                            mkdir -p $HOME/.ssh
+                            chown jenkins:jenkins $HOME/.ssh
+                            chmod 700 $HOME/.ssh
+                            terraform output -raw private_key_pem > $HOME/.ssh/default-key.pem
+                            chmod 600 $HOME/.ssh/default-key.pem
+                        '''
+                    }
+                }
+            }
+        }
+
+        stage('Terraform destroy') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+                    string(credentialsId: 'aws-secret-access-key-id', variable: 'AWS_SECRET_ACCESS_KEY')
+                ]) {
+                    script {
+                        sh '''
+                            #!/bin/bash
+                            cd infrastructure
+                            echo "Provisioning infrastructure"
+                            terraform destroy -auto-approve
+                        '''
+                    }
+                }
+            }
+        }
+    }
+}

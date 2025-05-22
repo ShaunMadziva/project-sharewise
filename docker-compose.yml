@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  sharewise-client:
+    image: nginx:alpine
+    volumes:
+      - ./Client:/usr/share/nginx/html
+    ports:
+      - "80:80"
+
+  sharewise-api:
+    image: hlyztrk/project-sharewise-api:latest
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on:
+      - sharewise-db
+    networks:
+      - sharewise-network
+
+  sharewise-db:
+    image: hlyztrk/project-sharewise-db:latest
+    ports:
+      - "5432:5432"
+    restart: always
+
+    networks:
+      - sharewise-network
+
+networks:
+  sharewise-network:
