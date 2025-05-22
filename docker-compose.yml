@@ -8,7 +8,7 @@ services:
       - "80:80"
 
   sharewise-api:
-    image: shaunmadziva/sharewise-api
+    image: hlyztrk/sharewise-api:latest
     ports:
       - "3000:3000"
     restart: always
@@ -18,7 +18,7 @@ services:
       - sharewise-network
 
   sharewise-db:
-    image: shaunmadziva/sharewise-db
+    image: hlyztrk/sharewise-db:latest
     ports:
       - "5432:5432"
     restart: always
