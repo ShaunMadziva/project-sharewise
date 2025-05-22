@@ -33,7 +33,7 @@ pipeline {
             }
         }
 
-        stage('Terraform destroy') {
+        stage('Terraform set up SSH') {
             steps {
                 withCredentials([
                     string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
@@ -44,8 +44,11 @@ pipeline {
                             #!/bin/bash
                             cd infrastructure
                             echo "Output pem file"
-                            terraform output -raw private_key_pem > /home/jenkins/.ssh/default-key.pem
-                            chmod 600 /home/jenkins/.ssh/default-key.pem
+                            mkdir -p $HOME/.ssh
+                            chown jenkins:jenkins $HOME/.ssh
+                            chmod 700 $HOME/.ssh
+                            terraform output -raw private_key_pem > $HOME/.ssh/default-key.pem
+                            chmod 600 $HOME/.ssh/default-key.pem
                         '''
                     }
                 }
