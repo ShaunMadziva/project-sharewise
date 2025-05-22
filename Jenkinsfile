@@ -32,9 +32,9 @@ pipeline {
                     sh '''
                         #!/bin/bash
                         echo "$dockerPassword" | docker login -u "$dockerUsername" --password-stdin
-                        docker tag shaunmadziva/project-sharewise-db:${BUILD_NUMBER} shaunmadziva/project-sharewise-db:latest
+                        docker tag hlyztrk/project-sharewise-db:${BUILD_NUMBER} hlyztrk/project-sharewise-db:latest
                         docker push ${IMAGE_NAME}-db:latest
-                        docker tag shaunmadziva/project-sharewise-api:${BUILD_NUMBER} shaunmadziva/project-sharewise-api:latest
+                        docker tag hlyztrk/project-sharewise-api:${BUILD_NUMBER} hlyztrk/project-sharewise-api:latest
                         docker push ${IMAGE_NAME}-api:latest
                         docker logout
                     '''
