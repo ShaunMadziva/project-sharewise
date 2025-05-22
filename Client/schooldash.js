@@ -223,7 +223,7 @@ async function fetchProcessedRequests() {
 
 function renderVisualization(x, y) {
   const container = document.getElementById("barChart");
-  container.innerHTML = ""; 
+  container.innerHTML = ""; // Clear any existing content
 
   // Create a canvas element for the chart
   const canvas = document.createElement("canvas");
@@ -324,3 +324,15 @@ function renderRequests(requests) {
 window.addEventListener("DOMContentLoaded", fetchAndRenderNotifications);
 window.addEventListener("DOMContentLoaded", fetchAndRenderRequests);
 window.addEventListener("DOMContentLoaded", fetchProcessedRequests);
+
+
+  //logout button
+  document.getElementById("logout-link").addEventListener("click", function (e) {
+    e.preventDefault();
+    localStorage.clear();
+    sessionStorage.clear();
+    console.log("User logged out.");
+
+    // Redirect to login page (or homepage)
+    window.location.href = "loginfinal.html"; 
+  });

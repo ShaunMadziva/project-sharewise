@@ -51,6 +51,6 @@ document.getElementById("logout-link").addEventListener("click", function (e) {
   sessionStorage.clear();
   console.log("User logged out.");
 
-  // Redirect to login page (or homepage)
-  window.location.href = "registerfinal.html";
-});
+    // Redirect to login page (or homepage)
+    window.location.href = "loginfinal.html"; 
+  });
