@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS notification;
 DROP TABLE IF EXISTS donation;
 DROP TABLE IF EXISTS request;
 DROP TABLE IF EXISTS donor;
