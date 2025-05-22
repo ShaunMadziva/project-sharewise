@@ -1,5 +1,3 @@
-import { aggregateRequestsData } from "../sharewise-api/helpers/dataProcessor.js";
-
 document.addEventListener("DOMContentLoaded", async () => {
   const name = localStorage.getItem("donor_name");
   const email = localStorage.getItem("email");
@@ -12,6 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Fetch and render donation data
   await fetchAndRenderDonations();
+  await fetchProcessedDonations();
 });
 
 async function fetchAndRenderDonations() {
@@ -36,16 +35,39 @@ async function fetchAndRenderDonations() {
     }
 
     const data = await response.json();
-    const donations = data.donations;
 
-    // Process the data using dataProcessor.js
-    const { x, y } = aggregateRequestsData(donations);
-
-    // Render the visualization
-    renderVisualization(x, y);
     renderDonations(data.donations);
   } catch (error) {
     console.error("Error loading donations:", error);
+  }
+}
+
+// function to fetch processed donation data
+async function fetchProcessedDonations() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found in localStorage");
+    return;
+  }
+  try {
+    const tokenParts = token.split(".");
+    const payload = JSON.parse(atob(tokenParts[1]));
+    const donorId = payload.donor_id;
+    const response = await fetch(
+      `http://localhost:3000/donations/donor/${donorId}/processed`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch processed donations");
+    }
+    const data = await response.json();
+    console.log("!", data);
+    const processedDonations = data.processed;
+    const x = processedDonations.x;
+    const y = processedDonations.y;
+    // Render the processed donations in a bar chart
+    renderVisualization(x, y);
+  } catch (error) {
+    console.error("Error loading processed donations:", error);
   }
 }
 
@@ -121,8 +143,6 @@ function renderDonations(donations) {
 
     const tdActions = document.createElement("td");
     tdActions.innerHTML = `
-        <button class="btn btn-sm btn-info me-1"><i class="fas fa-eye"></i> View</button>
-        <button class="btn btn-sm btn-warning me-1"><i class="fas fa-edit"></i> Edit</button>
         <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i> Delete</button>
       `;
 
@@ -140,6 +160,7 @@ function renderDonations(donations) {
 
 // Call on page load
 window.addEventListener("DOMContentLoaded", fetchAndRenderDonations);
+window.addEventListener("DOMContentLoaded",fetchProcessedDonations);
 
 //logout button
 document.getElementById("logout-link").addEventListener("click", function (e) {
@@ -150,5 +171,5 @@ document.getElementById("logout-link").addEventListener("click", function (e) {
   console.log("User logged out.");
 
   // Redirect to login page (or homepage)
-  window.location.href = "registerfinal.html";
+  window.location.href = "loginfinal.html";
 });

@@ -1,5 +1,3 @@
-import { aggregateRequestsData } from "../sharewise-api/helpers/dataProcessor.js";
-
 const notificationBtn = document.getElementById("notification-btn");
 const contact = document.querySelector(".contact-form");
 const body = document.querySelector("body");
@@ -99,41 +97,45 @@ function renderNotifications(notifications) {
     const markReadBtn = tdActions.querySelector(".mark-read");
     const deleteBtn = tdActions.querySelector(".delete");
     if (notification.isRead) {
-      markReadBtn.textContent = 'Read';
+      markReadBtn.textContent = "Read";
       markReadBtn.disabled = true;
-      markReadBtn.classList.add('btn-secondary');
-      tr.classList.add('text-muted'); // optional grey-out
+      markReadBtn.classList.add("btn-secondary");
+      tr.classList.add("text-muted"); // optional grey-out
     } else {
-      markReadBtn.textContent = 'Mark as Read';
-      markReadBtn.classList.add('btn-danger');
-      markReadBtn.addEventListener('click', async () => {
+      markReadBtn.textContent = "Mark as Read";
+      markReadBtn.classList.add("btn-danger");
+      markReadBtn.addEventListener("click", async () => {
         try {
-          const notificationResponse = await fetch(`http://localhost:3000/fulfill-donation/${notification.id}/read`, {
-            method: 'POST',
-            headers: { 'Authorization': `Bearer ${token}` }
-          });
-  
+          const notificationResponse = await fetch(
+            `http://localhost:3000/fulfill-donation/${notification.id}/read`,
+            {
+              method: "POST",
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+
           if (!notificationResponse.ok) {
-            throw new Error('Failed to mark as read');
+            throw new Error("Failed to mark as read");
           }
-          markReadBtn.textContent = 'Read';
+          markReadBtn.textContent = "Read";
           markReadBtn.disabled = true;
-          markReadBtn.classList.remove('btn-danger');
-          markReadBtn.classList.add('btn-secondary');
-          tr.classList.add('text-muted');
-  
+          markReadBtn.classList.remove("btn-danger");
+          markReadBtn.classList.add("btn-secondary");
+          tr.classList.add("text-muted");
+
           // Update badge count
           const currentCount = parseInt(badge.textContent);
           const newCount = currentCount - 1;
           if (newCount > 0) {
             badge.textContent = newCount;
           } else {
-            badge.style.display = 'none';
+            badge.style.display = "none";
           }
         } catch (err) {
-          console.error('Failed to mark as read:', err);
+          console.error("Failed to mark as read:", err);
         }
-      })};
+      });
+    }
 
     deleteBtn.addEventListener("click", async () => {
       try {
@@ -147,7 +149,7 @@ function renderNotifications(notifications) {
           }
         );
         if (!deleteResponse.ok) {
-          throw new Error('Failed to mark as read');
+          throw new Error("Failed to mark as read");
         }
 
         tr.remove();
@@ -162,7 +164,6 @@ function renderNotifications(notifications) {
     tbody.appendChild(tr);
   });
 }
-
 
 async function fetchAndRenderRequests() {
   const token = localStorage.getItem("token");
@@ -186,15 +187,37 @@ async function fetchAndRenderRequests() {
       throw new Error("Failed to fetch requests");
     }
     const data = await response.json();
-    // Process the data using dataProcessor.js
-    const { x, y } = aggregateRequestsData(data.requests);
-
-    // Render the visualization
-    renderVisualization(x, y);
 
     renderRequests(data.requests);
   } catch (error) {
     console.error("Error loading requests:", error);
+  }
+}
+
+async function fetchProcessedRequests() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found in localStorage");
+    return;
+  }
+  try {
+    const tokenParts = token.split(".");
+    const payload = JSON.parse(atob(tokenParts[1]));
+    const schoolId = payload.school_id;
+    const response = await fetch(
+      `http://localhost:3000/requests/school/${schoolId}/processed`
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch processed donations");
+    }
+    const data = await response.json();
+    const processedDonations = data.processed;
+    const x = processedDonations.x;
+    const y = processedDonations.y;
+    // Render the processed requests in a bar chart
+    renderVisualization(x, y);
+  } catch (error) {
+    console.error("Error loading processed donation requests:", error);
   }
 }
 
@@ -298,5 +321,18 @@ function renderRequests(requests) {
   });
 }
 
-window.addEventListener("DOMContentLoaded", fetchAndRenderNotifications)
+window.addEventListener("DOMContentLoaded", fetchAndRenderNotifications);
 window.addEventListener("DOMContentLoaded", fetchAndRenderRequests);
+window.addEventListener("DOMContentLoaded", fetchProcessedRequests);
+
+
+  //logout button
+  document.getElementById("logout-link").addEventListener("click", function (e) {
+    e.preventDefault();
+    localStorage.clear();
+    sessionStorage.clear();
+    console.log("User logged out.");
+
+    // Redirect to login page (or homepage)
+    window.location.href = "loginfinal.html"; 
+  });

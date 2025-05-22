@@ -1,4 +1,4 @@
-export const aggregateRequestsData = (requestsData) => {
+const aggregateRequestsData = (requestsData) => {
   const aggregated = {};
 
   requestsData.forEach((request) => {
@@ -21,3 +21,5 @@ export const aggregateRequestsData = (requestsData) => {
 
   return { x, y };
 };
+
+module.exports = { aggregateRequestsData };
