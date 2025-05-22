@@ -4,7 +4,12 @@ COPY package*.json /app/
 RUN npm install
 COPY . /app
 ENV PORT=3000
-ENV DB_URL=postgresql://postgres.zydxnsfwivadzuhhqgjh:rKZM26KJtRNf21i1@aws-0-eu-west-2.pooler.supabase.com:6543/postgres
+ENV DB_USER=postgres
+ENV DB_PORT=5433
+ENV DB_HOST=sharewise-db
+ENV DB_PASSWORD=docker
+ENV DB_NAME=sharewise
 ARG SECRET_TOKEN
+
 EXPOSE 3000
 CMD ["node", "index.js"]
