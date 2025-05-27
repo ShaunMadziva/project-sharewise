@@ -362,19 +362,19 @@
     const description = <span class="cstat-no" title="statement not covered" >descriptionInput.value.trim();</span>
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (!quantity || quantity &lt; 1 || quantity &gt; request.quantity) {</span>
-<span class="cstat-no" title="statement not covered" >      alert("Please enter a valid quantity.");</span>
+<span class="cstat-no" title="statement not covered" >      //("Please enter a valid quantity.");</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
 &nbsp;
 <span class="cstat-no" title="statement not covered" >    if (!description) {</span>
-<span class="cstat-no" title="statement not covered" >      alert("Please provide a description for the donation.");</span>
+<span class="cstat-no" title="statement not covered" >      //("Please provide a description for the donation.");</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
 &nbsp;
     // Retrieve donor ID from the token stored in localStorage
     const token = <span class="cstat-no" title="statement not covered" >localStorage.getItem("token");</span>
 <span class="cstat-no" title="statement not covered" >    if (!token) {</span>
-<span class="cstat-no" title="statement not covered" >      alert("You must be logged in to donate.");</span>
+<span class="cstat-no" title="statement not covered" >      //("You must be logged in to donate.");</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
 &nbsp;
@@ -384,7 +384,7 @@
 <span class="cstat-no" title="statement not covered" >      donorId = payload.donor_id; </span>// Extract donor ID from the payload
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >      console.error("Invalid token:", error);</span>
-<span class="cstat-no" title="statement not covered" >      alert("Invalid session. Please log in again.");</span>
+<span class="cstat-no" title="statement not covered" >      //("Invalid session. Please log in again.");</span>
 <span class="cstat-no" title="statement not covered" >      return;</span>
     }
 &nbsp;
@@ -409,11 +409,11 @@
 <span class="cstat-no" title="statement not covered" >        throw new Error("Failed to submit donation");</span>
       }
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      alert("Donation submitted successfully!");</span>
+<span class="cstat-no" title="statement not covered" >      //("Donation submitted successfully!");</span>
 <span class="cstat-no" title="statement not covered" >      fetchRequests();</span>
     } catch (error) {
 <span class="cstat-no" title="statement not covered" >      console.error(error.message);</span>
-<span class="cstat-no" title="statement not covered" >      alert("Error submitting donation. Please try again.");</span>
+<span class="cstat-no" title="statement not covered" >      //("Error submitting donation. Please try again.");</span>
     }
   }
 &nbsp;

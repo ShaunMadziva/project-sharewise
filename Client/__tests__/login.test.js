@@ -32,8 +32,8 @@ beforeEach(() => {
   })();
   Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
-  // Mock alert
-  window.alert = jest.fn();
+  // Mock //
+  window.// = jest.fn();
 
   // Mock location.href setter
   delete window.location;
@@ -97,7 +97,7 @@ describe('Login page tests', () => {
     expect(localStorage.setItem).toHaveBeenCalledWith('school_name', 'Test School');
     expect(localStorage.setItem).toHaveBeenCalledWith('email', 'test@example.com');
     expect(localStorage.setItem).toHaveBeenCalledWith('school_address', '123 Street');
-    expect(window.alert).toHaveBeenCalledWith('School login successful!');
+    expect(window.//).toHaveBeenCalledWith('School login successful!');
     expect(window.location.href).toBe('schooldash.html');
   });
 
@@ -118,7 +118,7 @@ describe('Login page tests', () => {
 
     await schoolForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
 
-    expect(window.alert).toHaveBeenCalledWith('Invalid credentials');
+    expect(window.//).toHaveBeenCalledWith('Invalid credentials');
   });
 
   test('network error on school login', async () => {
@@ -133,7 +133,7 @@ describe('Login page tests', () => {
 
     await schoolForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
 
-    expect(window.alert).toHaveBeenCalledWith('Error logging in as school.');
+    expect(window.//).toHaveBeenCalledWith('Error logging in as school.');
   });
 
   test('successful donor login', async () => {
@@ -164,7 +164,7 @@ describe('Login page tests', () => {
     expect(localStorage.setItem).toHaveBeenCalledWith('donor_id', 'id123');
     expect(localStorage.setItem).toHaveBeenCalledWith('email', 'donor@example.com');
     expect(localStorage.setItem).toHaveBeenCalledWith('donor_address', '456 Lane');
-    expect(window.alert).toHaveBeenCalledWith('Donor login successful!');
+    expect(window.//).toHaveBeenCalledWith('Donor login successful!');
     expect(window.location.href).toBe('donordash.html');
   });
 
@@ -185,7 +185,7 @@ describe('Login page tests', () => {
 
     await donorForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
 
-    expect(window.alert).toHaveBeenCalledWith('Donor login failed');
+    expect(window.//).toHaveBeenCalledWith('Donor login failed');
   });
 
   test('network error on donor login', async () => {
@@ -200,6 +200,6 @@ describe('Login page tests', () => {
 
     await donorForm.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
 
-    expect(window.alert).toHaveBeenCalledWith('Error logging in as donor.');
+    expect(window.//).toHaveBeenCalledWith('Error logging in as donor.');
   });
 });

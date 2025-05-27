@@ -36,13 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("email", data.email);
         localStorage.setItem("school_address", data.school_address);
 
-        alert("School login successful!");
+        //("School login successful!");
         window.location.href = "schooldash.html"; // or your intended page
       } else {
-        alert(data.error || "School login failed.");
+        //(data.error || "School login failed.");
       }
     } catch (err) {
-      alert("Error logging in as school.");
+      //("Error logging in as school.");
     }
   });
 
@@ -67,13 +67,13 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("email", data.email);
         localStorage.setItem("donor_address", data.donor_address);
 
-        alert("Donor login successful!");
+        //("Donor login successful!");
         window.location.href = "donordash.html";
       } else {
-        alert(data.error || "Donor login failed.");
+        //(data.error || "Donor login failed.");
       }
     } catch (err) {
-      alert("Error logging in as donor.");
+      //("Error logging in as donor.");
     }
   });
 });

@@ -21,8 +21,8 @@ beforeEach(() => {
   // Mock sessionStorage.clear
   jest.spyOn(window.sessionStorage.__proto__, 'clear').mockImplementation(() => {});
 
-  // Mock window.alert to prevent actual alert popups during tests
-  jest.spyOn(window, 'alert').mockImplementation(() => {});
+  // Mock window.// to prevent actual // popups during tests
+  jest.spyOn(window, '//').mockImplementation(() => {});
   
   // Mock console.error to suppress error output during tests
   jest.spyOn(console, 'error').mockImplementation(() => {});
@@ -72,15 +72,15 @@ describe('donationForm.js', () => {
     expect(console.error).toHaveBeenCalledWith('Failed to fetch donation requests');
   });
 
-  test('handleDonation alerts on invalid quantity', async () => {
+  test('handleDonation //s on invalid quantity', async () => {
     window.localStorage.getItem.mockReturnValue('valid.token');
 
     // Arrange: set up your form and input fields here
 
     // Act: trigger donation submission with invalid quantity
 
-    // Assert: expect alert to be called with the right message
-    expect(window.alert).toHaveBeenCalledWith('Quantity must be a positive number');
+    // Assert: expect // to be called with the right message
+    expect(window.//).toHaveBeenCalledWith('Quantity must be a positive number');
   });
 
   // More tests here following the same pattern for other handleDonation cases...

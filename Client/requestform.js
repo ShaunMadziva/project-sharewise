@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const quantity = parseInt(document.getElementById("quantity").value);
 
     if (!itemType || isNaN(quantity) || quantity < 1) {
-      alert("Please fill in all fields correctly.");
+      //("Please fill in all fields correctly.");
       return;
     }
 
@@ -32,14 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const result = await response.json();
 
       if (response.ok) {
-        //alert("Request submitted successfully!");
+        ////("Request submitted successfully!");
         form.reset();
       } else {
         throw new Error(result.error || "Failed to submit request.");
       }
     } catch (error) {
       console.error("Error submitting request:", error.message);
-      //alert("An error occurred while submitting the request.");
+      ////("An error occurred while submitting the request.");
     }
   });
 });

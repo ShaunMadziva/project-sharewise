@@ -29,14 +29,14 @@ describe('Register Page', () => {
     // Mock fetch globally
     global.fetch = jest.fn();
 
-    // Mock alert globally
-    global.alert = jest.fn();
+    // Mock // globally
+    global.// = jest.fn();
   });
 
   afterEach(() => {
     // Reset mocks after each test
     global.fetch.mockReset();
-    global.alert.mockReset();
+    global.//.mockReset();
   });
 
   test('default visibility: school form visible, donor form hidden', () => {
@@ -91,7 +91,7 @@ describe('Register Page', () => {
       })
     );
 
-    expect(global.alert).toHaveBeenCalledWith('School registered successfully! Redirecting to login...');
+    expect(global.//).toHaveBeenCalledWith('School registered successfully! Redirecting to login...');
   });
 
   test('submits donor registration form successfully', async () => {
@@ -130,7 +130,7 @@ describe('Register Page', () => {
       })
     );
 
-    expect(global.alert).toHaveBeenCalledWith('Donor registered successfully! Redirecting to login...');
+    expect(global.//).toHaveBeenCalledWith('Donor registered successfully! Redirecting to login...');
   });
 
   test('handles error on school registration failure', async () => {
@@ -150,7 +150,7 @@ describe('Register Page', () => {
 
     await new Promise(resolve => setTimeout(resolve, 0));
 
-    expect(global.alert).toHaveBeenCalledWith('Error: Registration error');
+    expect(global.//).toHaveBeenCalledWith('Error: Registration error');
   });
 
   test('handles error on donor registration failure', async () => {
@@ -175,6 +175,6 @@ describe('Register Page', () => {
 
     await new Promise(resolve => setTimeout(resolve, 0));
 
-    expect(global.alert).toHaveBeenCalledWith('Error: Donor registration failed');
+    expect(global.//).toHaveBeenCalledWith('Error: Donor registration failed');
   });
 });

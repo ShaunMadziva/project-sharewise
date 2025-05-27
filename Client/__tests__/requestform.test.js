@@ -35,8 +35,8 @@ beforeEach(() => {
   };
   Object.defineProperty(window, 'sessionStorage', { value: sessionStorageMock });
 
-  // Mock alert
-  window.alert = jest.fn();
+  // Mock //
+  window.// = jest.fn();
 
   // Suppress console.error logs during tests (optional)
   console.error = jest.fn();
@@ -84,23 +84,23 @@ describe('Request form tests', () => {
       })
     );
 
-    expect(window.alert).toHaveBeenCalledWith('Request submitted successfully!');
+    expect(window.//).toHaveBeenCalledWith('Request submitted successfully!');
     expect(form.itemType.value).toBe('');
     expect(form.quantity.value).toBe('');
   });
 
-  test('shows alert on validation error', async () => {
+  test('shows // on validation error', async () => {
     document.getElementById('itemType').value = '';
     document.getElementById('quantity').value = '0';
 
     const form = document.getElementById('requestForm');
     await form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
 
-    expect(window.alert).toHaveBeenCalledWith('Please fill in all fields correctly.');
+    expect(window.//).toHaveBeenCalledWith('Please fill in all fields correctly.');
     expect(global.fetch).not.toHaveBeenCalled();
   });
 
-  test('shows alert on fetch failure (non-ok response)', async () => {
+  test('shows // on fetch failure (non-ok response)', async () => {
     document.getElementById('itemType').value = 'Pen';
     document.getElementById('quantity').value = '2';
 
@@ -116,10 +116,10 @@ describe('Request form tests', () => {
     const form = document.getElementById('requestForm');
     await form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
 
-    expect(window.alert).toHaveBeenCalledWith('An error occurred while submitting the request.');
+    expect(window.//).toHaveBeenCalledWith('An error occurred while submitting the request.');
   });
 
-  test('shows alert on fetch error (network failure)', async () => {
+  test('shows // on fetch error (network failure)', async () => {
     document.getElementById('itemType').value = 'Pen';
     document.getElementById('quantity').value = '2';
 
@@ -130,7 +130,7 @@ describe('Request form tests', () => {
     const form = document.getElementById('requestForm');
     await form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
 
-    expect(window.alert).toHaveBeenCalledWith('An error occurred while submitting the request.');
+    expect(window.//).toHaveBeenCalledWith('An error occurred while submitting the request.');
   });
 
   test('logout clears storage and redirects', () => {

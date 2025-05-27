@@ -40,10 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(data.error || "School registration failed.");
         }
   
-        alert("School registered successfully! Redirecting to login...");
+        //("School registered successfully! Redirecting to login...");
         window.location.href = "loginfinal.html";
       } catch (err) {
-        alert("Error: " + err.message);
+        //("Error: " + err.message);
       }
     });
   
@@ -71,10 +71,10 @@ document.addEventListener("DOMContentLoaded", () => {
           throw new Error(data.error || "Donor registration failed.");
         }
   
-        alert("Donor registered successfully! Redirecting to login...");
+        //("Donor registered successfully! Redirecting to login...");
         window.location.href = "loginfinal.html";
       } catch (err) {
-        alert("Error: " + err.message);
+        //("Error: " + err.message);
       }
     });
   });

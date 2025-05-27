@@ -259,13 +259,13 @@
         localStorage.setItem("email", data.email);
         localStorage.setItem("school_address", data.school_address);
 &nbsp;
-        alert("School login successful!");
+        //("School login successful!");
         window.location.href = "schooldash.html"; // or your intended page
       } else {
-        alert(data.error || <span class="branch-1 cbranch-no" title="branch not covered" >"School login failed.")</span>;
+        //(data.error || <span class="branch-1 cbranch-no" title="branch not covered" >"School login failed.")</span>;
       }
     } catch (err) {
-      alert("Error logging in as school.");
+      //("Error logging in as school.");
     }
   });
 &nbsp;
@@ -290,13 +290,13 @@
         localStorage.setItem("email", data.email);
         localStorage.setItem("donor_address", data.donor_address);
 &nbsp;
-        alert("Donor login successful!");
+        //("Donor login successful!");
         window.location.href = "donordash.html";
       } else {
-        alert(data.error || <span class="branch-1 cbranch-no" title="branch not covered" >"Donor login failed.")</span>;
+        //(data.error || <span class="branch-1 cbranch-no" title="branch not covered" >"Donor login failed.")</span>;
       }
     } catch (err) {
-      alert("Error logging in as donor.");
+      //("Error logging in as donor.");
     }
   });
 });

@@ -53,19 +53,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     const description = descriptionInput.value.trim();
 
     if (!quantity || quantity < 1 || quantity > request.quantity) {
-      alert("Please enter a valid quantity.");
+      //("Please enter a valid quantity.");
       return;
     }
 
     if (!description) {
-      alert("Please provide a description for the donation.");
+      //("Please provide a description for the donation.");
       return;
     }
 
     // Retrieve donor ID from the token stored in localStorage
     const token = localStorage.getItem("token");
     if (!token) {
-      alert("You must be logged in to donate.");
+      //("You must be logged in to donate.");
       return;
     }
 
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       donorId = payload.donor_id; // Extract donor ID from the payload
     } catch (error) {
       console.error("Invalid token:", error);
-      alert("Invalid session. Please log in again.");
+      //("Invalid session. Please log in again.");
       return;
     }
 
@@ -100,11 +100,11 @@ document.addEventListener("DOMContentLoaded", async () => {
         throw new Error("Failed to submit donation");
       }
 
-      alert("Donation submitted successfully!");
+      //("Donation submitted successfully!");
       fetchRequests();
     } catch (error) {
       console.error(error.message);
-      alert("Error submitting donation. Please try again.");
+      //("Error submitting donation. Please try again.");
     }
   }
 
