@@ -1,4 +1,6 @@
-# ShareWise: http://34.39.114.116/index2.html
+  
+[ShareWise](http://34.39.114.116/index2.html){:target="_blank"}
+
 
 ShareWise is a web-based platform that connects schools with organisations willing to donate surplus tech supplies that would otherwise be destroyed/end up in landfills.
 
