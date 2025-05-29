@@ -6,6 +6,7 @@ const donationRouter = Router();
 donationRouter.post("/", donationController.createDonation);
 donationRouter.get("/", donationController.getAllDonations);
 donationRouter.get("/donor/:donorId", donationController.getDonationByDonorId);
+donationRouter.get("/donor/:donorId/processed", donationController.processDonorData);
 donationRouter.get("/:id", donationController.getDonationById);
 donationRouter.delete("/:id", donationController.deleteDonation);
 

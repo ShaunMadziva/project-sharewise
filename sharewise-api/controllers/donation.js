@@ -1,13 +1,9 @@
-const { Donation } = require("../models/Donation");
+const Donation = require("../models/Donation");
+const processedData = require("../helpers/dataProcessor.js");
 
 const createDonation = async (req, res) => {
   try {
-    const data = {
-      donorId: req.body.donorId,
-      requestId: req.body.requestId,
-      quantity: req.body.quantity,
-      description: req.body.description,
-    };
+    const data = req.body;
 
     const newDonation = await Donation.createDonation(data);
 
@@ -56,6 +52,21 @@ const getDonationByDonorId = async (req, res) => {
   }
 };
 
+const processDonorData = async (req, res) => {
+  try {
+    const donorId = req.params.donorId;
+    const donations = await Donation.getByDonorId(donorId);
+    const processed = processedData.aggregateRequestsData(donations);
+
+    res.status(200).json({
+      success: true,
+      processed,
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 const deleteDonation = async (req, res) => {
   try {
     const deletedDonation = await Donation.deleteById(req.params.id);
@@ -74,4 +85,5 @@ module.exports = {
   getDonationById,
   deleteDonation,
   getDonationByDonorId,
+  processDonorData,
 };

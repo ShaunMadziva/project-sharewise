@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url("background_dashboard.jpg") no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+
+    .sidebar {
+      height: 100%;
+      width: 200px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding-top: 30px;
+    }
+
+    .sidebar a {
+      padding: 15px 20px;
+      text-decoration: none;
+      font-size: 18px;
+      color: white;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .sidebar i {
+      margin-right: 10px;
+    }
+
+    .main-content {
+      margin-left: 220px;
+      padding: 40px 20px;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      color: black;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .btn {
+      border-radius: 8px;
+    }
+    .btn-primary {
+        background-color: #b9b995;
+        border: none;
+        color: #333;
+        font-weight: bold;
+      }
+
+    .btn-primary:hover {
+        background-color: #a5a57d;
+      }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <a href="index2.html"><i class="fas fa-home"></i> Home</a>
+    <a href="index2.html#about-impact"><i class="fas fa-calendar-alt"></i> About us</a>
+    <a href="#" id="logout-link"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card p-4">
+            <h2 class="text-center mb-4">Contact Us</h2>
+            <form id="contact-form">
+              <div class="mb-3">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="name" required />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-control" id="email" required />
+              </div>
+              <div class="mb-3">
+                <label for="subject" class="form-label">Subject</label>
+                <input type="text" class="form-control" id="subject" required />
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" rows="5" required></textarea>
+              </div>
+              <div class="text-end">
+                <button type="submit" class="btn btn-primary">Send Message</button>
+              </div>
+              <div id="form-alert" class="mt-3 text-success d-none">Message sent successfully!</div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Logout and Form Script -->
+  <script>
+    // Logout function
+    document.getElementById("logout-link").addEventListener("click", function (e) {
+      e.preventDefault();
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = "loginfinal.html";
+    });
+
+    // Simple Contact Form Handler
+    document.getElementById("contact-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      // Simulate sending data
+      document.getElementById("form-alert").classList.remove("d-none");
+      // Reset form
+      this.reset();
+    });
+  </script>
+</body>
+</html>
