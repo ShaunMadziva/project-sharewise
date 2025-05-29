@@ -86,7 +86,11 @@ function renderNotifications(notifications) {
       notification.requestId
     } (${notification.itemName}) has been ${notification.requestStatus} by ${
       notification.donorName || "Anonymous"
-    } at ${new Date(notification.createdAt).toLocaleString()}`;
+    } at ${new Date(notification.createdAt).toLocaleString(undefined, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    })}`;
 
     const tdActions = document.createElement("td");
     tdActions.innerHTML = `
@@ -287,7 +291,12 @@ function renderRequests(requests) {
     tdStatus.textContent = request.requestStatus;
 
     const tdDate = document.createElement("td");
-    tdDate.textContent = request.requestDate;
+    const newDate = new Date(request.requestDate).toLocaleString(undefined, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit'
+    })
+    tdDate.textContent = newDate;
 
     const tdActions = document.createElement("td");
     tdActions.innerHTML = `
