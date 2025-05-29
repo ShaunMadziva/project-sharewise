@@ -1,0 +1,32 @@
+pipeline {
+  agent any
+
+  environment {
+    ANSIBLE_HOST_KEY_CHECKING = 'False'
+  }
+
+  stages {
+    stage('Install Requirements') {
+      steps {
+        sh ''' 
+            #!/bin/bash
+            apt-get update
+            apt-get install -y ansible ssh
+            '''
+      }
+    }
+
+    stage('Run Ansible Playbook') {
+      steps {
+        dir('ansible'){
+        withCredentials([sshUserPrivateKey(credentialsId: 'ec2-key-pair', keyFileVariable: 'PRIVATE_KEY_FILE', usernameVariable: 'SSH_USER')]) {
+        sh '''
+            ansible-playbook -i ansible_hosts playbooks/docker-install.yml
+            ansible-playbook -i ansible_hosts playbooks/docker-run.yml
+        '''
+         }
+        }
+      }
+    }
+  }
+}
