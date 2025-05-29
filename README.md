@@ -12,6 +12,8 @@ The goal of this project was to build a scalable, secure, and automated infrastr
 
 ## 🧱 Architecture
 
+![ShareWise Architecture](./Client/sharewise_architecture.png "Diagram showing the ShareWise CI/CD and cloud deployment architecture. The workflow starts with a developer pushing code to GitHub, which triggers Jenkins for CI/CD. Jenkins builds Docker images and pushes them to Docker Hub. Terraform provisions AWS infrastructure, including a VPC with public and private subnets. The public subnet hosts API servers on EC2 instances, and the private subnet hosts a database server on EC2. Ansible pulls Docker images from Docker Hub and deploys containers to EC2 instances. An AWS Elastic Load Balancer distributes traffic to the API servers, making the public website accessible. The diagram includes logos for GitHub, Jenkins, Docker, Docker Hub, Terraform, Ansible, AWS EC2, and AWS ELB. The overall tone is technical and professional, illustrating a modern DevOps pipeline.")
+
 - **Code Repository**: GitHub
 - **CI/CD Automation**: Jenkins
 - **Containerization**: Docker
